@@ -10,8 +10,12 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
+# Added automatically by Netbeans
 /nce_client/nbproject/private/
 /nce_client/build/
+/nce_server/nbproject/private/
+/nce_server/build/
 
 
 # Created by https://www.gitignore.io
@@ -22,3 +26,10 @@ hs_err_pid*
 /nce_client/nbactions.xml
 /nce_client/nb-configuration.xml
 /nce_client/.nb-gradle/
+
+/nce_server/nbbuild/
+/nce_server/dist/
+/nce_server/nbdist/
+/nce_server/nbactions.xml
+/nce_server/nb-configuration.xml
+/nce_server/.nb-gradle/
