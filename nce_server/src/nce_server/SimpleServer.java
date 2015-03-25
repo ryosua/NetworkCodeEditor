@@ -4,13 +4,14 @@ import java.net.*;
 import java.io.*;
 public class SimpleServer extends Thread
 {
-    private ServerSocket serverSocket;
+    private final ServerSocket serverSocket;
 
     public SimpleServer(int port) throws IOException
     {
         serverSocket = new ServerSocket(port);
         //serverSocket.setSoTimeout(10000);
     }
+    @Override
     public void run()
     {
         while(true)
@@ -22,10 +23,11 @@ public class SimpleServer extends Thread
                 
                 Socket client = serverSocket.accept();
                 
+                Thread clientThread = new ClientThread(client);
+                clientThread.start();
+                
                 System.out.println("Just connected to "
                 + client.getRemoteSocketAddress());
-                
-                //client.close();
             }
             catch(SocketTimeoutException s)
             {
