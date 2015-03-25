@@ -7,8 +7,12 @@ import javax.swing.JTextField;
 
 public class Panel extends JPanel
 {
-    public Panel()
+    private final MainController mainController;
+    
+    public Panel(MainController mainController)
     {
+        this.mainController = mainController;
+        
         final int ROWS = 3;
         final int COLUMNS = 2;
         

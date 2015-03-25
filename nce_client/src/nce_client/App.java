@@ -8,6 +8,7 @@ public class App
     public static void main(String[] args)
     {
        System.out.println("Client App Started");
-       new Frame();
+       
+       MainController mainController = new MainController();
     }
 }

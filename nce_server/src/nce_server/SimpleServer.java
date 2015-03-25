@@ -19,10 +19,13 @@ public class SimpleServer extends Thread
             {
                 System.out.println("Waiting for client on port "
                 + serverSocket.getLocalPort() + "...");
+                
                 Socket client = serverSocket.accept();
+                
                 System.out.println("Just connected to "
                 + client.getRemoteSocketAddress());
-                client.close();
+                
+                //client.close();
             }
             catch(SocketTimeoutException s)
             {

@@ -5,15 +5,20 @@ import javax.swing.JPanel;
 
 public class Frame extends JFrame
 {
-    public Frame()
+    private final MainController mainController;
+    
+    public Frame(MainController mainController)
     {
-        JPanel panel = new Panel();
+        this.mainController = mainController;
         
+        // Construct the panel.
+        JPanel panel = new Panel(this.mainController);
+        
+        //Setupthe frame.
         getContentPane().setLayout(new BorderLayout());
         getContentPane().add(panel, "Center");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize (500, 500);
+        setSize(500, 500);
         setVisible(true);
     }
-    
 }
