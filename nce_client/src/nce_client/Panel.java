@@ -1,8 +1,8 @@
 package nce_client;
 
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -33,7 +33,7 @@ public class Panel extends JPanel
         JTextField sharedField = new JTextField();
         
         // Add Action Listeners
-        sharedField.addActionListener(new SyncFieldListener(mainController, sharedField));
+        sharedField.addKeyListener(new SyncFieldListener(mainController, sharedField));
         
         //Add UI elements.
         add(userNameLabel);
@@ -44,7 +44,7 @@ public class Panel extends JPanel
         add(sharedField);
     }
     
-    public class SyncFieldListener implements ActionListener
+    public class SyncFieldListener implements KeyListener
     {
         private final MainController mainController;
         private final NetworkController networkController;
@@ -59,7 +59,17 @@ public class Panel extends JPanel
         }
         
         @Override
-        public void actionPerformed(ActionEvent e)
+        public void keyTyped(KeyEvent e) {
+            // Do nothing.
+        }
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+            // Do nothing.
+        }
+
+        @Override
+        public void keyReleased(KeyEvent e)
         {
             networkController.sendMessage(sharedField.getText());
         }
