@@ -2,11 +2,11 @@ package nce_server;
 
 import java.net.*;
 import java.io.*;
-public class SimpleServer extends Thread
+public class Server extends Thread
 {
     private final ServerSocket serverSocket;
 
-    public SimpleServer(int port) throws IOException
+    public Server(int port) throws IOException
     {
         serverSocket = new ServerSocket(port);
         //serverSocket.setSoTimeout(10000);

@@ -14,7 +14,7 @@ public class App
         
         try
         {
-            Thread t = new SimpleServer(port);
+            Thread t = new Server(port);
             t.start();
         }
         catch(IOException e)

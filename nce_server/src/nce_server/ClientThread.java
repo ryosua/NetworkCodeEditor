@@ -12,7 +12,7 @@ public class ClientThread extends Thread
 {
     private final Socket client;
     
-    private DataInputStream in;
+    private final DataInputStream in;
     
     public ClientThread(Socket client)
     {
@@ -29,10 +29,6 @@ public class ClientThread extends Thread
         }
         
         in = new DataInputStream(inFromClient);
-    }
-
-    ClientThread(Thread client) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     @Override
