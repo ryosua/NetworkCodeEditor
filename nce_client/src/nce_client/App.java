@@ -9,6 +9,5 @@ public class App
     {
        System.out.println("Client App Started");
        new Frame();
-	   //IM A COMMENT WOOO
     }
 }
