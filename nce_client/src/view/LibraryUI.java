@@ -59,6 +59,9 @@ public class LibraryUI extends JFrame{
         setVisible(true);
         
         addWindowListener(new LogoutWindowAdapter());
+        
+        NetworkCntl networkCntl = libraryCntl.getLoginCntl().getNetworkCntl();
+        networkCntl.connectToServer();
     }
     
     //accessors

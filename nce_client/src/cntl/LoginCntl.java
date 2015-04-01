@@ -67,6 +67,6 @@ public class LoginCntl{
         //if matches criteria return true
         //else return false
         
-        return getNetworkCntl().connectToServer();
+        return true;
     }
 }

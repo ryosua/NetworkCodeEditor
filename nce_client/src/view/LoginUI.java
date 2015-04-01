@@ -111,7 +111,6 @@ public class LoginUI extends JFrame{
                 loginCntl.getLibraryUI();
                 setVisible(false);
             }
-            
         }
     }
     
