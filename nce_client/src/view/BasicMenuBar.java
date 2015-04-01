@@ -1,24 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package view;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.ImageIcon;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
-/**
- *
- * @author Eric
- */
-public class BasicMenuBar extends JMenuBar{
-    
+public class BasicMenuBar extends JMenuBar
+{
     //menus
     private JMenu clientMenu;
 
@@ -26,12 +15,14 @@ public class BasicMenuBar extends JMenuBar{
     private JMenuItem exitItem;
     
     //contstructor
-    public BasicMenuBar(){
+    public BasicMenuBar()
+    {
         initComponents();
     }
     
     //accessors
-    public JMenu getClientMenu(){
+    public JMenu getClientMenu()
+    {
         return clientMenu;
     }
     
@@ -39,7 +30,8 @@ public class BasicMenuBar extends JMenuBar{
     
 
     //otherMethods
-    private void initComponents(){
+    private void initComponents()
+    {
         //init menus
         clientMenu = new JMenu("NCE_Client");
         
@@ -51,9 +43,10 @@ public class BasicMenuBar extends JMenuBar{
         this.add(clientMenu);
     }
     
-    public class ExitItemListener implements ActionListener{
-
-        public void actionPerformed(ActionEvent evt) {
+    public class ExitItemListener implements ActionListener
+    {
+        public void actionPerformed(ActionEvent evt)
+        {
             System.exit(0);
         }
     }

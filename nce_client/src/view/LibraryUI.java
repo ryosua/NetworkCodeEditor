@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package view;
 
 import cntl.LibraryCntl;
@@ -25,12 +19,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import listener.SyncFieldListener;
 
-/**
- *
- * @author Eric
- */
-public class LibraryUI extends JFrame{
-
+public class LibraryUI extends JFrame
+{
     private LibraryCntl libraryCntl;
     
     //UI components
@@ -68,7 +58,8 @@ public class LibraryUI extends JFrame{
     
 
     //otherMethods
-    private void initComponents(){
+    private void initComponents()
+    {    
         //init all interface components here
         //init with layouts
         mainPanel = new JPanel(new BorderLayout());
@@ -85,7 +76,8 @@ public class LibraryUI extends JFrame{
         NetworkCntl networkCntl = libraryCntl.getLoginCntl().getNetworkCntl();
         sharedField.addKeyListener(new SyncFieldListener(networkCntl, sharedField));
         //sample List items
-        for(int i = 0; i < 20; i++){
+        for(int i = 0; i < 20; i++)
+        {
             listModel.addElement("Sample Element " + i);
         }
         
@@ -113,21 +105,22 @@ public class LibraryUI extends JFrame{
     }
     
     //Custom menubar
-    private class LibraryMenuBar extends BasicMenuBar{
-        
+    private class LibraryMenuBar extends BasicMenuBar
+    {
         //menus
         private JMenu fileMenu;
         
         //items
         private JMenuItem logoutItem;
         
-        private LibraryMenuBar(){
+        private LibraryMenuBar()
+        {
             super();
             initAdditionalComponents();
         }
         
-        private void initAdditionalComponents(){
-            
+        private void initAdditionalComponents()
+        {
             //init menus
             fileMenu = new JMenu("File");
             
@@ -145,9 +138,10 @@ public class LibraryUI extends JFrame{
     
     
     //actionListeners
-    private class LogoutBtnListener implements ActionListener{
-
-        public void actionPerformed(ActionEvent ae) {
+    private class LogoutBtnListener implements ActionListener
+    {
+        public void actionPerformed(ActionEvent ae)
+        {
             libraryCntl.getLoginCntl().getLoginUI();
             setVisible(false);
         }
@@ -156,13 +150,16 @@ public class LibraryUI extends JFrame{
     /**
      * A window adapter that logs the user out when they close the frame.
      */
-    private class LogoutWindowAdapter extends WindowAdapter{
+    private class LogoutWindowAdapter extends WindowAdapter
+    {
         @Override
-        public void windowClosing(WindowEvent winEvt){
+        public void windowClosing(WindowEvent winEvt)
+        {
             NetworkCntl networkCntl = libraryCntl.getLoginCntl().getNetworkCntl();
             
             // Disconnect from the server if there is a connection.
-            if (networkCntl.getConnectionStatus() == true){
+            if (networkCntl.getConnectionStatus() == true)
+            {
                 networkCntl.disconnectFromServer();
             }
             

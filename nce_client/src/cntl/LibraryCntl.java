@@ -1,19 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package cntl;
 
 import view.LibraryUI;
 
-/**
- *
- * @author Eric
- */
-public class LibraryCntl{
-    
+public class LibraryCntl
+{    
     //UI reference
     private LibraryUI libraryUI;
     
@@ -21,17 +11,20 @@ public class LibraryCntl{
     private LoginCntl loginCntl;
 
     //contstructor
-    public LibraryCntl(LoginCntl parentCntl){
+    public LibraryCntl(LoginCntl parentCntl)
+    {
         loginCntl = parentCntl;
         libraryUI = new LibraryUI(this);
     }
     
     //accessors
-    public LibraryUI getLibraryUI(){
+    public LibraryUI getLibraryUI()
+    {
         return libraryUI;
     }
     
-    public LoginCntl getLoginCntl(){
+    public LoginCntl getLoginCntl()
+    {
         return loginCntl;
     }
 
@@ -39,7 +32,8 @@ public class LibraryCntl{
     
 
     //otherMethods
-    private void fetchLibrary(){
+    private void fetchLibrary()
+    {
         //make connection with database
         //query SELECT * ;
         //add results to listview on libraryUI

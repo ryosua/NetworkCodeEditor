@@ -1,15 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package view;
 
 import cntl.LoginCntl;
 import cntl.NetworkCntl;
 import java.awt.BorderLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
@@ -18,12 +11,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-/**
- *
- * @author Eric
- */
-public class LoginUI extends JFrame{
-    
+public class LoginUI extends JFrame
+{
     private LoginCntl loginCntl;
     
     //UI components
@@ -42,7 +31,8 @@ public class LoginUI extends JFrame{
     
     
     //contstructor
-    public LoginUI(LoginCntl parentCntl){
+    public LoginUI(LoginCntl parentCntl)
+    {
         loginCntl = parentCntl;
         setSize(400, 150);
         setTitle("Login");
@@ -64,7 +54,8 @@ public class LoginUI extends JFrame{
     
 
     //otherMethods
-    private void initComponents(){
+    private void initComponents()
+    {
         //init all interface components
         
         //init with layouts
@@ -108,19 +99,24 @@ public class LoginUI extends JFrame{
     }
     
     //actionListeners
-    private class LoginBtnListener implements ActionListener{
-
-        public void actionPerformed(ActionEvent evt) {
-            if(loginCntl.authenticate()){
+    private class LoginBtnListener implements ActionListener
+    {
+        @Override
+        public void actionPerformed(ActionEvent evt)
+        {
+            if(loginCntl.authenticate())
+            {
                 loginCntl.getLibraryUI();
                 setVisible(false);
             }
         }
     }
     
-    private class ExitBtnListener implements ActionListener{
-
-        public void actionPerformed(ActionEvent evt) {
+    private class ExitBtnListener implements ActionListener
+    {
+        @Override
+        public void actionPerformed(ActionEvent evt)
+        {
             System.exit(0);
         }
     }

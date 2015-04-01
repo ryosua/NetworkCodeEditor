@@ -1,57 +1,62 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package cntl;
 
 import view.LoginUI;
 
-/**
- *
- * @author Eric
- */
-public class LoginCntl{
-    
+public class LoginCntl
+{
     private LoginUI loginUI;
     private LibraryCntl libraryCntl;
     private EditorCntl editorCntl;
     private NetworkCntl networkCntl;
 
     //contstructor
-    public LoginCntl(){
+    public LoginCntl()
+    {
         loginUI = new LoginUI(this);
         System.out.println("Client App Started");
     }
     
     //accessors
-    public void getLoginUI(){
-        if(loginUI != null){
+    public void getLoginUI()
+    {
+        if(loginUI != null)
+        {
             loginUI.setVisible(true);
-        }else{
+        }
+        else
+        {
             loginUI = new LoginUI(this);
         }
     }
     
-    public void getLibraryUI(){
-        if(libraryCntl != null){
+    public void getLibraryUI()
+    {
+        if(libraryCntl != null)
+        {
             libraryCntl.getLibraryUI().setVisible(true);
-        }else{
+        }
+        else
+        {
             libraryCntl = new LibraryCntl(this);
         }
     }
     
-    public void getEditorUI(){
-        if(editorCntl != null){
+    public void getEditorUI()
+    {
+        if(editorCntl != null)
+        {
             editorCntl.getEditorUI();
-        }else{
+        }
+        else
+        {
             editorCntl = new EditorCntl();
         }
     }
     
-    public NetworkCntl getNetworkCntl(){
-        if(networkCntl == null){
+    public NetworkCntl getNetworkCntl()
+    {
+        if(networkCntl == null)
+        {
             networkCntl = new NetworkCntl();
         }
         
@@ -62,7 +67,8 @@ public class LoginCntl{
     
 
     //otherMethods
-    public boolean authenticate(){
+    public boolean authenticate()
+    {
         /* IMPLEMENT LATER */
         //if matches criteria return true
         //else return false
