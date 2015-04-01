@@ -10,13 +10,13 @@ public class NetworkController
      
     public void connectToServer()
     {
-        final String serverName = "127.0.0.1";
-        final int port = 5001;
+        final String SERVER_NAME = "127.0.0.1";
+        final int PORT = 5001;
 
         try
         {
-            System.out.println("Connecting to " + serverName + " on port " + port);
-            Socket client = new Socket(serverName, port);
+            System.out.println("Connecting to " + SERVER_NAME + " on port " + PORT);
+            Socket client = new Socket(SERVER_NAME, PORT);
 
             System.out.println("Just connected to " + client.getRemoteSocketAddress());
 
