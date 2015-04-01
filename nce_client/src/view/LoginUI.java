@@ -7,6 +7,7 @@
 package view;
 
 import cntl.LoginCntl;
+import cntl.NetworkCntl;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -51,6 +52,9 @@ public class LoginUI extends JFrame{
         setResizable(false);
         initComponents();
         setVisible(true);
+        
+        NetworkCntl networkCntl = loginCntl.getNetworkCntl();
+        networkCntl.connectToServer();
     }
     
     //accessors
