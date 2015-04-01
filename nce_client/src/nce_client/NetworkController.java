@@ -4,10 +4,10 @@ import java.net.*;
 import java.io.*;
 
 public class NetworkController
-{
-    private DataOutputStream out;
+{ 
     private DataInputStream in;
-            
+    private DataOutputStream out;
+     
     public void connectToServer()
     {
         final String serverName = "127.0.0.1";
@@ -44,6 +44,25 @@ public class NetworkController
             if (out != null)
             {
                 out.writeUTF(message);
+            }
+            else
+            {
+                System.out.println("No connection");
+            }
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+    }
+    
+    public void disconnectFromServer()
+    {
+        try
+        {
+            if (out != null)
+            {
+                out.writeUTF(Protocol.DISCONNECT_MESSAGE);
             }
             else
             {

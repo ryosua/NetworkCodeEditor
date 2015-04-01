@@ -1,6 +1,7 @@
 package nce_server;
 
 import java.io.DataInputStream;
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.Socket;
@@ -37,15 +38,28 @@ public class ClientThread extends Thread
         while(true)
         {
             try
-            {
+            {   
                 String readUTF = in.readUTF();
-          
-                System.out.println("Client says: " + readUTF);
+                
+                if (readUTF.equals(Protocol.DISCONNECT_MESSAGE))
+                {
+                    System.out.println("Client logged out.");
+                    break;
+                }
+                else
+                {
+                    System.out.println("Client says: " + readUTF);
+                }
             }
-            catch (IOException e)
+            catch(EOFException e)
+            {
+                System.out.println("Client quit unexpectantly.");
+                break;
+            }
+            catch(IOException e)
             {
                 e.printStackTrace();
-            }
+            }  
         }
     }
 }
