@@ -35,7 +35,16 @@ public class Frame extends JFrame
         @Override
         public void windowClosing(WindowEvent winEvt)
         {
-            mainController.getNetworkController().disconnectFromServer();
+            NetworkController networkController = 
+                    mainController.getNetworkController();
+            
+            // Disconnect from the server if there is a connection.
+            if (networkController.getConnectionStatus() == true)
+            {
+                networkController.disconnectFromServer();
+            }
+            
+            //Close the app.
             System.exit(0);
         }
     }

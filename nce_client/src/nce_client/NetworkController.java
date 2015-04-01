@@ -7,16 +7,29 @@ public class NetworkController
 { 
     private DataInputStream in;
     private DataOutputStream out;
+    private boolean connectedToServer;
+    
+    public NetworkController()
+    {
+        connectedToServer = false;
+    }
      
     public void connectToServer()
     {
+        if (connectedToServer == true)
+        {
+            throw new IllegalStateException("You may not connect to the server"
+                    + " if you have already connected.");
+        }
+        
         final String SERVER_NAME = "127.0.0.1";
         final int PORT = 5001;
-
+        
         try
         {
             System.out.println("Connecting to " + SERVER_NAME + " on port " + PORT);
             Socket client = new Socket(SERVER_NAME, PORT);
+            connectedToServer = true;
 
             System.out.println("Just connected to " + client.getRemoteSocketAddress());
 
@@ -28,17 +41,21 @@ public class NetworkController
             InputStream inFromServer = client.getInputStream();
             in = new DataInputStream(inFromServer);
             System.out.println("Server says " + in.readUTF());
-
-            //client.close();
         }
         catch(IOException e)
         {
-            e.printStackTrace();
+            System.out.println("Could not connect to the server.");
         }
     }
     
     public void sendMessage(String message)
     {
+        if (connectedToServer == false)
+        {
+            throw new IllegalStateException("You may not send a message without"
+                    + " connecting to the server first.");
+        }
+        
         try
         {
             if (out != null)
@@ -58,6 +75,12 @@ public class NetworkController
     
     public void disconnectFromServer()
     {
+        if (connectedToServer == false)
+        {
+            throw new IllegalStateException("You may disconnect from the server"
+                    + " if you are not connected to it.");
+        }
+        
         try
         {
             if (out != null)
@@ -73,5 +96,14 @@ public class NetworkController
         {
             e.printStackTrace();
         }
+    }
+    
+    /**
+     * 
+     * @return false for disconnected or true for connected
+     */
+    public boolean getConnectionStatus()
+    {
+        return connectedToServer;
     }
 }
