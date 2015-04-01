@@ -17,6 +17,7 @@ public class LoginCntl{
     private LoginUI loginUI;
     private LibraryCntl libraryCntl;
     private EditorCntl editorCntl;
+    private NetworkCntl networkCntl;
 
     //contstructor
     public LoginCntl(){
@@ -48,6 +49,14 @@ public class LoginCntl{
             editorCntl = new EditorCntl();
         }
     }
+    
+    public NetworkCntl getNetworkCntl(){
+        if(networkCntl == null){
+            networkCntl = new NetworkCntl();
+        }
+        
+        return networkCntl;
+    }
 
     //mutators
     
@@ -57,6 +66,7 @@ public class LoginCntl{
         /* IMPLEMENT LATER */
         //if matches criteria return true
         //else return false
-        return true;
+        
+        return getNetworkCntl().connectToServer();
     }
 }

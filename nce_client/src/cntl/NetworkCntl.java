@@ -1,20 +1,25 @@
-package nce_client;
+package cntl;
 
 import java.net.*;
 import java.io.*;
+import misc.Protocol;
 
-public class NetworkController
+public class NetworkCntl
 { 
     private DataInputStream in;
     private DataOutputStream out;
     private boolean connectedToServer;
     
-    public NetworkController()
+    public NetworkCntl()
     {
         connectedToServer = false;
     }
      
-    public void connectToServer()
+    /**
+     * 
+     * @return true if the connection was successful
+     */
+    public boolean connectToServer()
     {
         if (connectedToServer == true)
         {
@@ -29,6 +34,7 @@ public class NetworkController
         {
             System.out.println("Connecting to " + SERVER_NAME + " on port " + PORT);
             Socket client = new Socket(SERVER_NAME, PORT);
+            
             connectedToServer = true;
 
             System.out.println("Just connected to " + client.getRemoteSocketAddress());
@@ -46,6 +52,8 @@ public class NetworkController
         {
             System.out.println("Could not connect to the server.");
         }
+        
+        return connectedToServer;
     }
     
     public void sendMessage(String message)

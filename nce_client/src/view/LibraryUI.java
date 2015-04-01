@@ -7,17 +7,23 @@
 package view;
 
 import cntl.LibraryCntl;
+import cntl.NetworkCntl;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+import listener.SyncFieldListener;
 
 /**
  *
@@ -51,6 +57,8 @@ public class LibraryUI extends JFrame{
         setResizable(false);
         initComponents();
         setVisible(true);
+        
+        addWindowListener(new LogoutWindowAdapter());
     }
     
     //accessors
@@ -71,6 +79,11 @@ public class LibraryUI extends JFrame{
         libraryList = new JList(listModel);
         scrollPane = new JScrollPane(libraryList);
         
+        JLabel sharedFieldLabel = new JLabel("Shared field:");
+        JTextField sharedField = new JTextField();
+        
+        NetworkCntl networkCntl = libraryCntl.getLoginCntl().getNetworkCntl();
+        sharedField.addKeyListener(new SyncFieldListener(networkCntl, sharedField));
         //sample List items
         for(int i = 0; i < 20; i++){
             listModel.addElement("Sample Element " + i);
@@ -87,6 +100,8 @@ public class LibraryUI extends JFrame{
         btnPanelSouth.add(deleteBtn);
         
         listPanel.add(scrollPane);
+        listPanel.add(sharedFieldLabel);
+        listPanel.add(sharedField);
         
         //add subpanels to mainPanel
         mainPanel.add(listPanel, BorderLayout.CENTER);
@@ -135,6 +150,24 @@ public class LibraryUI extends JFrame{
         public void actionPerformed(ActionEvent ae) {
             libraryCntl.getLoginCntl().getLoginUI();
             setVisible(false);
+        }
+    }
+    
+    /**
+     * A window adapter that logs the user out when they close the frame.
+     */
+    private class LogoutWindowAdapter extends WindowAdapter{
+        @Override
+        public void windowClosing(WindowEvent winEvt){
+            NetworkCntl networkCntl = libraryCntl.getLoginCntl().getNetworkCntl();
+            
+            // Disconnect from the server if there is a connection.
+            if (networkCntl.getConnectionStatus() == true){
+                networkCntl.disconnectFromServer();
+            }
+            
+            //Close the app.
+            System.exit(0);
         }
     }
 }
