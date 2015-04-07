@@ -24,7 +24,11 @@ public class Server extends Thread
                 Socket client = serverSocket.accept();
                 
                 Thread clientThread = new ClientThread(client);
-                clientThread.start();
+                
+                if (((ClientThread)clientThread).canStart())
+                {
+                    clientThread.start();
+                }
                 
                 System.out.println("Just connected to "
                 + client.getRemoteSocketAddress());

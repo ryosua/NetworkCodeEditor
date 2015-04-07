@@ -1,9 +1,11 @@
 package nce_server;
 
 import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.Socket;
 
 /**
@@ -12,29 +14,42 @@ import java.net.Socket;
 public class ClientThread extends Thread
 {
     private final Socket client;
+    private DataInputStream in;
+    private DataOutputStream out;
     
-    private final DataInputStream in;
+    private boolean canStart = false;
     
     public ClientThread(Socket client)
     {
         this.client = client;
         InputStream inFromClient = null;
+        OutputStream outToClient = null;
         
         try
         {
             inFromClient = client.getInputStream();
+            outToClient = client.getOutputStream();
+            
+            in = new DataInputStream(inFromClient);
+            out = new DataOutputStream(outToClient);
+            
+            canStart = true;
         }
         catch(IOException e)
         {
             e.printStackTrace();
         }
-        
-        in = new DataInputStream(inFromClient);
     }
     
     @Override
     public void run()
     {
+        if (canStart == false)
+        {
+            throw new IllegalStateException("You may not start the server"
+                    + "without checking canStart() .");
+        }
+        
         while(true)
         {
             try
@@ -61,5 +76,16 @@ public class ClientThread extends Thread
                 e.printStackTrace();
             }  
         }
+    }
+    
+    /**
+     * The server can not be started if unless this method returns true. If it
+     * returns false it indicates that there was an error with the connection to
+     * the client.
+     * @return if the ClientThread can be started.
+     */
+    public boolean canStart()
+    {
+        return canStart;
     }
 }
