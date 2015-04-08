@@ -17,14 +17,12 @@ public class LoginUI extends JFrame
     
     //UI components
     private JPanel mainPanel;
-    private JPanel infoPanel;
-    private JPanel btnPanel;
+    private JPanel northPanel;
+    private JPanel southPanel;
     
     private JLabel usernameLabel;
-    private JLabel passwordLabel;
     
     private JTextField usernameField;
-    private JTextField passwordField;
     
     private JButton loginBtn;
     private JButton exitBtn;
@@ -37,7 +35,6 @@ public class LoginUI extends JFrame
         setSize(400, 150);
         setTitle("Login");
         setLocationRelativeTo(null);
-        setUndecorated(true);
         setFocusable(true);
         setResizable(false);
         initComponents();
@@ -60,16 +57,14 @@ public class LoginUI extends JFrame
         
         //init with layouts
         mainPanel = new JPanel(new BorderLayout());
-        infoPanel = new JPanel();
-        btnPanel = new JPanel();
+        northPanel = new JPanel();
+        southPanel = new JPanel();
         
         //init with label text
-        usernameLabel = new JLabel("Username: ");
-        passwordLabel = new JLabel("Password: ");
+        usernameLabel = new JLabel("Select a Username: ");
         
         //init with column #
         usernameField = new JTextField(25);
-        passwordField = new JTextField(25);
         
         //init with label text
         loginBtn = new JButton("Login");
@@ -80,17 +75,15 @@ public class LoginUI extends JFrame
         exitBtn.addActionListener(new ExitBtnListener());
         
         //add components to subpanels panels
-        infoPanel.add(usernameLabel);
-        infoPanel.add(usernameField);
-        infoPanel.add(passwordLabel);
-        infoPanel.add(passwordField);
+        northPanel.add(usernameLabel);
+        northPanel.add(usernameField);
         
-        btnPanel.add(exitBtn);
-        btnPanel.add(loginBtn);
+        southPanel.add(exitBtn);
+        southPanel.add(loginBtn);
         
         //add panels to main
-        mainPanel.add(infoPanel, BorderLayout.CENTER);
-        mainPanel.add(btnPanel, BorderLayout.SOUTH);
+        mainPanel.add(northPanel, BorderLayout.CENTER);
+        mainPanel.add(southPanel, BorderLayout.SOUTH);
         
         this.setJMenuBar(new BasicMenuBar());
         
@@ -106,7 +99,7 @@ public class LoginUI extends JFrame
         {
             if(loginCntl.authenticate())
             {
-                loginCntl.getLibraryUI();
+                loginCntl.getEditorUI();
                 setVisible(false);
             }
         }

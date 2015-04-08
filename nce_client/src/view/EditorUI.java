@@ -1,20 +1,53 @@
 package view;
 
 import cntl.EditorCntl;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
 public class EditorUI extends JFrame
 {
     //Cntl references
     private EditorCntl editorCntl;
+    
+    //UI components
+    private JPanel mainPanel;
+    private JPanel subPanel;
+    private JPanel actionPanel;
+    private JPanel userPanel;
+    private JPanel chatPanel;
+    private JPanel sendPanel;
+    
+    private JScrollPane editorScrollPane;
+    private JScrollPane userScrollPane;
+    private JScrollPane chatScrollPane;
+    private JScrollPane sendScrollPane;
+    
+    private JTextArea mainTextArea;
+    private JTextArea userTextArea;
+    private JTextArea chatTextArea;
+    private JTextArea sendTextArea;
+    
+    private JLabel usernameLabel;
+    private JLabel chatLabel;
+    private JLabel connectedUsersLabel;
+    
+    private JButton logoutBtn;
+    private JButton sendBtn;
 
     //contstructor
     public EditorUI(EditorCntl parentCntl)
     {
         editorCntl = parentCntl;
-        setSize(400, 125);
-        setTitle("File Name Goes Here!");
+        setSize(800, 600);
+        setTitle("Editor");
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setFocusable(true);
@@ -25,7 +58,7 @@ public class EditorUI extends JFrame
     }
     
     //accessors
-
+    
 
     //mutators
     
@@ -33,6 +66,63 @@ public class EditorUI extends JFrame
     //otherMethods
     private void initComponents()
     {
+        mainPanel = new JPanel(new BorderLayout());
+        subPanel = new JPanel(new BorderLayout());
+        userPanel = new JPanel(new BorderLayout());
+        actionPanel = new JPanel();
+        chatPanel = new JPanel(new BorderLayout());
+        sendPanel = new JPanel();
         
+        usernameLabel = new JLabel("Username ex: ewp5080");
+        connectedUsersLabel = new JLabel("Connected users: ");
+        chatLabel = new JLabel("Chat: ");
+        
+        logoutBtn = new JButton("Logout");
+        sendBtn = new JButton("Send");
+        
+        mainTextArea = new JTextArea();
+        mainTextArea.setLineWrap(true);
+        userTextArea = new JTextArea();
+        userTextArea.setLineWrap(true);
+        chatTextArea = new JTextArea();
+        chatTextArea.setLineWrap(true);
+        sendTextArea = new JTextArea();
+        sendTextArea.setLineWrap(true);
+        
+        editorScrollPane = new JScrollPane(mainTextArea);
+        editorScrollPane.setPreferredSize(new Dimension(435, 500));
+        editorScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        userScrollPane = new JScrollPane(userTextArea);
+        userScrollPane.setPreferredSize(new Dimension(100, 75));
+        userScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        sendScrollPane = new JScrollPane(sendTextArea);
+        sendScrollPane.setPreferredSize(new Dimension(210, 50));
+        sendScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        chatScrollPane = new JScrollPane(chatTextArea);
+        chatScrollPane.setPreferredSize(new Dimension(100, 325));
+        chatScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        
+        actionPanel.add(usernameLabel);
+        actionPanel.add(logoutBtn);
+        
+        userPanel.add(connectedUsersLabel, BorderLayout.NORTH);
+        userPanel.add(userScrollPane, BorderLayout.CENTER);
+        
+        sendPanel.add(sendScrollPane);
+        sendPanel.add(sendBtn);
+        
+        chatPanel.add(chatLabel, BorderLayout.NORTH);
+        chatPanel.add(chatScrollPane, BorderLayout.CENTER);
+        chatPanel.add(sendPanel, BorderLayout.SOUTH);
+        
+        subPanel.add(actionPanel, BorderLayout.NORTH);
+        subPanel.add(userPanel, BorderLayout.CENTER);
+        subPanel.add(chatPanel, BorderLayout.SOUTH);
+        
+        mainPanel.add(editorScrollPane, BorderLayout.CENTER);
+        mainPanel.add(subPanel, BorderLayout.EAST);
+        this.add(mainPanel);
+        
+        this.setJMenuBar(new BasicMenuBar());
     }
 }
