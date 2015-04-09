@@ -17,7 +17,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-import listener.SyncFieldListener;
 
 public class LibraryUI extends JFrame
 {
@@ -74,7 +73,7 @@ public class LibraryUI extends JFrame
         JTextField sharedField = new JTextField();
         
         NetworkCntl networkCntl = libraryCntl.getLoginCntl().getNetworkCntl();
-        sharedField.addKeyListener(new SyncFieldListener(networkCntl, sharedField));
+        //sharedField.addKeyListener(new SyncFieldListener(networkCntl, sharedField));
         //sample List items
         for(int i = 0; i < 20; i++)
         {
