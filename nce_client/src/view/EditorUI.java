@@ -12,7 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import listener.SyncFieldListener;
+import model.SyncFieldListener;
 
 public class EditorUI extends JFrame
 {

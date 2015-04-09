@@ -2,7 +2,7 @@ package cntl;
 
 import java.net.*;
 import java.io.*;
-import misc.Protocol;
+import model.Protocol;
 
 public class NetworkCntl
 { 

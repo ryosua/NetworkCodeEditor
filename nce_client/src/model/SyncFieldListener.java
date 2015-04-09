@@ -1,4 +1,4 @@
-package listener;
+package model;
 
 import cntl.NetworkCntl;
 import java.awt.event.KeyEvent;
