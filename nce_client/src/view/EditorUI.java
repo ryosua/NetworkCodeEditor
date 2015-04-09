@@ -1,6 +1,7 @@
 package view;
 
 import cntl.EditorCntl;
+import cntl.LoginCntl;
 import cntl.MainCntl;
 import cntl.NetworkCntl;
 import java.awt.BorderLayout;
@@ -17,6 +18,7 @@ public class EditorUI extends JFrame
 {
     //Cntl references
     private final EditorCntl editorCntl;
+    private final LoginCntl loginCntl;
     private final MainCntl mainCntl;
     private final NetworkCntl networkCntl;
                 
@@ -50,6 +52,7 @@ public class EditorUI extends JFrame
     {
         this.editorCntl = editorCntl;
         mainCntl = editorCntl.getMainCntl();
+        loginCntl = mainCntl.getLoginCntl();
         networkCntl = mainCntl.getNetworkCntl();
         
         // TODO: We need a reference to the networkCntl to add the shared field.
@@ -82,7 +85,7 @@ public class EditorUI extends JFrame
         chatPanel = new JPanel(new BorderLayout());
         sendPanel = new JPanel();
         
-        usernameLabel = new JLabel("Username ex: ewp5080");
+        usernameLabel = new JLabel("Username: " + loginCntl.getUsername());
         connectedUsersLabel = new JLabel("Connected users: ");
         chatLabel = new JLabel("Chat: ");
         

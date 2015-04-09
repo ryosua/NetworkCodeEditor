@@ -9,6 +9,8 @@ public class LoginCntl
     //Cntl references 
     private final MainCntl mainCntl;
     
+    private String username;
+    
     //contstructor
     public LoginCntl(MainCntl mainCntl)
     {
@@ -43,16 +45,23 @@ public class LoginCntl
     {
         return mainCntl;
     }
+    
+    public String getUsername()
+    {
+        return username;
+    }
           
     //mutators
     
 
     //otherMethods
-    public boolean authenticate()
+    public boolean authenticate(String username)
     {
         /* IMPLEMENT LATER */
         //if matches criteria return true
         //else return false
+        
+        this.username = username;
         
         return true;
     }

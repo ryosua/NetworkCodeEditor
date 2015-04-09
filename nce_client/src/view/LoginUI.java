@@ -101,7 +101,7 @@ public class LoginUI extends JFrame
         @Override
         public void actionPerformed(ActionEvent evt)
         {
-            if(loginCntl.authenticate())
+            if(loginCntl.authenticate(usernameField.getText()))
             {
                 // Connect to the server in a new thread.
                 new Thread(
