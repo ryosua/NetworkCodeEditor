@@ -3,17 +3,17 @@ package listener;
 import cntl.NetworkCntl;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import javax.swing.JTextField;
+import javax.swing.JTextArea;
 
 public class SyncFieldListener implements KeyListener
 {
     private final NetworkCntl networkController;
-    private final JTextField sharedField;
+    private final JTextArea sharedTextArea;
 
-    public SyncFieldListener(NetworkCntl networkController, JTextField sharedField)
+    public SyncFieldListener(NetworkCntl networkController, JTextArea sharedTextArea)
     {
         this.networkController = networkController;
-        this.sharedField = sharedField;
+        this.sharedTextArea = sharedTextArea;
     }
 
     @Override
@@ -31,6 +31,6 @@ public class SyncFieldListener implements KeyListener
     @Override
     public void keyReleased(KeyEvent e)
     {
-        networkController.sendMessage(sharedField.getText());
+        networkController.sendMessage(sharedTextArea.getText());
     }
 }
