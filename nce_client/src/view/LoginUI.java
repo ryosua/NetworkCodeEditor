@@ -46,8 +46,6 @@ public class LoginUI extends JFrame
         setResizable(false);
         initComponents();
         setVisible(true);
-        
-        networkCntl.connectToServer();
     }
     
     //accessors
@@ -105,9 +103,13 @@ public class LoginUI extends JFrame
         {
             if(loginCntl.authenticate())
             {
+                // Connect to the server in a new thread.
+                new Thread(
+                    () -> networkCntl.connectToServer()
+                ).start();
+                
                 loginCntl.closeLoginUI();
                 mainCntl.getEditorCntl().openEditorUI();
-                setVisible(false);
             }
         }
     }

@@ -20,7 +20,6 @@ public class LoginCntl
         if(loginUI == null)
         {
             loginUI = new LoginUI(this);
-           
         }
         
         loginUI.setVisible(true);
@@ -28,6 +27,12 @@ public class LoginCntl
     
     public void closeLoginUI()
     {
+        if (loginUI == null)
+        {
+            throw new IllegalStateException("Can not close the loginUI if it"
+                    + "is not open.");
+        }
+        
         loginUI.setVisible(false);
     }
     

@@ -1,13 +1,12 @@
 package view;
 
 import cntl.EditorCntl;
-import cntl.LoginCntl;
+import cntl.MainCntl;
 import cntl.NetworkCntl;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import static javax.swing.JFrame.EXIT_ON_CLOSE;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -18,9 +17,8 @@ public class EditorUI extends JFrame
 {
     //Cntl references
     private final EditorCntl editorCntl;
-    // TODO: We need a reference to the networkCntl to add the shared field.
-    //private final NetworkCntl networkCntl;
-    //private final LoginCntl logingCntl;
+    private final MainCntl mainCntl;
+    private final NetworkCntl networkCntl;
                 
     //UI components
     private JPanel mainPanel;
@@ -48,9 +46,11 @@ public class EditorUI extends JFrame
     private JButton sendBtn;
 
     //contstructor
-    public EditorUI(EditorCntl parentCntl)
+    public EditorUI(EditorCntl editorCntl)
     {
-        editorCntl = parentCntl;
+        this.editorCntl = editorCntl;
+        mainCntl = editorCntl.getMainCntl();
+        networkCntl = mainCntl.getNetworkCntl();
         
         // TODO: We need a reference to the networkCntl to add the shared field.
         //logingCntl = editorCntl.getLoginCntl();
@@ -64,7 +64,6 @@ public class EditorUI extends JFrame
         setResizable(false);
         initComponents();
         setVisible(true);
-        initComponents();
     }
     
     //accessors
@@ -99,8 +98,7 @@ public class EditorUI extends JFrame
         sendTextArea = new JTextArea();
         sendTextArea.setLineWrap(true);
         
-        // TODO: We need a reference to the networkCntl to add the shared field.
-        //addKeyListener(new SyncFieldListener(networkCntl, mainTextArea));
+        mainTextArea.addKeyListener(new SyncFieldListener(networkCntl, mainTextArea));
         
         editorScrollPane = new JScrollPane(mainTextArea);
         editorScrollPane.setPreferredSize(new Dimension(435, 500));
