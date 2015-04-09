@@ -4,6 +4,7 @@ public class Client
 {    
     public static void main(String[] args)
     {
-        LoginCntl loginCntl = new LoginCntl();
+        MainCntl mainCntl = new MainCntl();
+        mainCntl.startApp();
     }
 }

@@ -1,6 +1,7 @@
 package view;
 
 import cntl.LoginCntl;
+import cntl.MainCntl;
 import cntl.NetworkCntl;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -13,7 +14,10 @@ import javax.swing.JTextField;
 
 public class LoginUI extends JFrame
 {
-    private LoginCntl loginCntl;
+    //Cntl references 
+    private final LoginCntl loginCntl;
+    private final MainCntl mainCntl;
+    private final NetworkCntl networkCntl;
     
     //UI components
     private JPanel mainPanel;
@@ -29,9 +33,12 @@ public class LoginUI extends JFrame
     
     
     //contstructor
-    public LoginUI(LoginCntl parentCntl)
+    public LoginUI(LoginCntl loginCntl)
     {
-        loginCntl = parentCntl;
+        this.loginCntl = loginCntl;
+        mainCntl = loginCntl.getMainCntl();
+        networkCntl = mainCntl.getNetworkCntl();
+        
         setSize(400, 150);
         setTitle("Login");
         setLocationRelativeTo(null);
@@ -40,7 +47,6 @@ public class LoginUI extends JFrame
         initComponents();
         setVisible(true);
         
-        NetworkCntl networkCntl = loginCntl.getNetworkCntl();
         networkCntl.connectToServer();
     }
     
@@ -99,7 +105,8 @@ public class LoginUI extends JFrame
         {
             if(loginCntl.authenticate())
             {
-                loginCntl.getEditorUI();
+                loginCntl.closeLoginUI();
+                mainCntl.getEditorCntl().openEditorUI();
                 setVisible(false);
             }
         }

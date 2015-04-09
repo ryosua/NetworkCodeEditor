@@ -8,24 +8,29 @@ public class EditorCntl
     private EditorUI editorUI;
 
     //Cntl references 
+    private final MainCntl mainCntl;
             
     //contstructor
-    public EditorCntl()
+    public EditorCntl(MainCntl mainCntl)
     {
-        editorUI = new EditorUI(this);
+        this.mainCntl = mainCntl;
     }
     
-    //accessors
-    public void getEditorUI()
+    public void openEditorUI()
     {
-        if(editorUI != null)
-        {
-            editorUI.setVisible(true);
-        }
-        else
+        if(editorUI == null)
         {
             editorUI = new EditorUI(this);
         }
+        
+        editorUI.setVisible(true);
+    }
+    
+    //accessors
+    
+    public MainCntl getMainCntl()
+    {
+        return mainCntl;
     }
 
     //mutators

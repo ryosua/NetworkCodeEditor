@@ -10,8 +10,13 @@ public class NetworkCntl
     private DataOutputStream out;
     private boolean connectedToServer;
     
-    public NetworkCntl()
+    //Cntl references 
+    private final MainCntl mainCntl;
+    
+    public NetworkCntl(MainCntl mainCntl)
     {
+        this.mainCntl = mainCntl;
+        
         connectedToServer = false;
     }
      
@@ -113,5 +118,10 @@ public class NetworkCntl
     public boolean getConnectionStatus()
     {
         return connectedToServer;
+    }
+    
+    public MainCntl getMainCntl()
+    {
+        return mainCntl;
     }
 }

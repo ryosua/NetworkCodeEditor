@@ -5,64 +5,40 @@ import view.LoginUI;
 public class LoginCntl
 {
     private LoginUI loginUI;
-    private LibraryCntl libraryCntl;
-    private EditorCntl editorCntl;
-    private NetworkCntl networkCntl;
-
+    
+    //Cntl references 
+    private final MainCntl mainCntl;
+    
     //contstructor
-    public LoginCntl()
+    public LoginCntl(MainCntl mainCntl)
     {
-        loginUI = new LoginUI(this);
-        System.out.println("Client App Started");
+        this.mainCntl = mainCntl;
+    }
+    
+    public void openLoginUI()
+    {
+        if(loginUI == null)
+        {
+            loginUI = new LoginUI(this);
+           
+        }
+        
+        loginUI.setVisible(true);
+    }
+    
+    public void closeLoginUI()
+    {
+        loginUI.setVisible(false);
     }
     
     //accessors
-    public void getLoginUI()
-    {
-        if(loginUI != null)
-        {
-            loginUI.setVisible(true);
-        }
-        else
-        {
-            loginUI = new LoginUI(this);
-        }
-    }
     
-    public void getLibraryUI()
-    {
-        if(libraryCntl != null)
-        {
-            libraryCntl.getLibraryUI().setVisible(true);
-        }
-        else
-        {
-            libraryCntl = new LibraryCntl(this);
-        }
-    }
     
-    public void getEditorUI()
+    public MainCntl getMainCntl()
     {
-        if(editorCntl != null)
-        {
-            editorCntl.getEditorUI();
-        }
-        else
-        {
-            editorCntl = new EditorCntl();
-        }
+        return mainCntl;
     }
-    
-    public NetworkCntl getNetworkCntl()
-    {
-        if(networkCntl == null)
-        {
-            networkCntl = new NetworkCntl();
-        }
-        
-        return networkCntl;
-    }
-
+          
     //mutators
     
 
