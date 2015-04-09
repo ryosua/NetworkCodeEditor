@@ -1,9 +1,10 @@
 package view;
 
 import cntl.EditorCntl;
+import cntl.LoginCntl;
+import cntl.NetworkCntl;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.GridLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
@@ -11,12 +12,16 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import listener.SyncFieldListener;
 
 public class EditorUI extends JFrame
 {
     //Cntl references
-    private EditorCntl editorCntl;
-    
+    private final EditorCntl editorCntl;
+    // TODO: We need a reference to the networkCntl to add the shared field.
+    //private final NetworkCntl networkCntl;
+    //private final LoginCntl logingCntl;
+                
     //UI components
     private JPanel mainPanel;
     private JPanel subPanel;
@@ -46,6 +51,11 @@ public class EditorUI extends JFrame
     public EditorUI(EditorCntl parentCntl)
     {
         editorCntl = parentCntl;
+        
+        // TODO: We need a reference to the networkCntl to add the shared field.
+        //logingCntl = editorCntl.getLoginCntl();
+        //networkCntl = logingCntl.getNetworkCntl();
+        
         setSize(800, 600);
         setTitle("Editor");
         setLocationRelativeTo(null);
@@ -88,6 +98,9 @@ public class EditorUI extends JFrame
         chatTextArea.setLineWrap(true);
         sendTextArea = new JTextArea();
         sendTextArea.setLineWrap(true);
+        
+        // TODO: We need a reference to the networkCntl to add the shared field.
+        //addKeyListener(new SyncFieldListener(networkCntl, mainTextArea));
         
         editorScrollPane = new JScrollPane(mainTextArea);
         editorScrollPane.setPreferredSize(new Dimension(435, 500));
