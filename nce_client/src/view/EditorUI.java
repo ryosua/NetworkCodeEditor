@@ -101,6 +101,7 @@ public class EditorUI extends JFrame
         sendTextArea = new JTextArea();
         sendTextArea.setLineWrap(true);
         
+        networkCntl.updateAreaFromServer(mainTextArea);
         mainTextArea.addKeyListener(new SyncFieldListener(networkCntl, mainTextArea));
         
         editorScrollPane = new JScrollPane(mainTextArea);

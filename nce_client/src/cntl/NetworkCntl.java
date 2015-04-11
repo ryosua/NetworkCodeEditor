@@ -2,7 +2,9 @@ package cntl;
 
 import java.net.*;
 import java.io.*;
+import javax.swing.JTextArea;
 import model.Protocol;
+import model.UpdatedTextAreaThread;
 
 public class NetworkCntl
 { 
@@ -84,6 +86,16 @@ public class NetworkCntl
         {
             e.printStackTrace();
         }
+    }
+    
+    public void updateAreaFromServer(JTextArea textArea)
+    {
+        if (connectedToServer == false)
+        {
+            throw new IllegalStateException("You must connect to the server first.");
+        }
+        
+        new UpdatedTextAreaThread(in, textArea).start();
     }
     
     public void disconnectFromServer()

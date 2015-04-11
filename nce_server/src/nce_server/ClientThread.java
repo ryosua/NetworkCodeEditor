@@ -64,6 +64,7 @@ public class ClientThread extends Thread
                 else
                 {
                     System.out.println("Client says: " + readUTF);
+                    sendMessage(readUTF);
                 }
             }
             catch(EOFException e)
@@ -75,6 +76,25 @@ public class ClientThread extends Thread
             {
                 e.printStackTrace();
             }  
+        }
+    }
+    
+    public void sendMessage(String message)
+    {
+        try
+        {
+            if (out != null)
+            {
+                out.writeUTF(message);
+            }
+            else
+            {
+                System.out.println("No connection");
+            }
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
         }
     }
     

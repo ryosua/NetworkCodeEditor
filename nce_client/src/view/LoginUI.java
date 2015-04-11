@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import model.LoginTask;
 
 public class LoginUI extends JFrame
 {
@@ -104,12 +105,8 @@ public class LoginUI extends JFrame
             if(loginCntl.authenticate(usernameField.getText()))
             {
                 // Connect to the server in a new thread.
-                new Thread(
-                    () -> networkCntl.connectToServer()
-                ).start();
-                
-                loginCntl.closeLoginUI();
-                mainCntl.getEditorCntl().openEditorUI();
+                LoginTask loginTask = new LoginTask(loginCntl, mainCntl, networkCntl);
+                loginTask.execute();
             }
         }
     }
