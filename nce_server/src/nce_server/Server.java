@@ -2,14 +2,19 @@ package nce_server;
 
 import java.net.*;
 import java.io.*;
+import java.util.Vector;
+
 public class Server extends Thread
 {
     private final ServerSocket serverSocket;
+    private final SharedDocument document;
+    private final Vector<Thread> clients;
 
     public Server(int port) throws IOException
     {
+        document = new SharedDocument();
+        clients = new Vector<Thread>();
         serverSocket = new ServerSocket(port);
-        //serverSocket.setSoTimeout(10000);
     }
     @Override
     public void run()
@@ -23,8 +28,8 @@ public class Server extends Thread
                 
                 Socket client = serverSocket.accept();
                 
-                Thread clientThread = new ClientThread(client);
-                
+                Thread clientThread = new ClientThread(client, document, clients);
+               
                 if (((ClientThread)clientThread).canStart())
                 {
                     clientThread.start();

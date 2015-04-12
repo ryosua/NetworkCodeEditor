@@ -7,21 +7,32 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.util.Vector;
 
 /**
  * Each client runs it it's own thread.
  */
 public class ClientThread extends Thread
 {
+    private final Vector<Thread> clients;
     private final Socket client;
+    private final SharedDocument document;
+    
     private DataInputStream in;
     private DataOutputStream out;
     
     private boolean canStart = false;
     
-    public ClientThread(Socket client)
+    public ClientThread(Socket client, SharedDocument document, Vector<Thread> clients)
     {
         this.client = client;
+        this.document = document;
+        
+        this.clients = clients;
+        
+        // Add this client to the list of clients who will recieve broadcasts.
+        clients.add(this);
+        
         InputStream inFromClient = null;
         OutputStream outToClient = null;
         
@@ -64,7 +75,12 @@ public class ClientThread extends Thread
                 else
                 {
                     System.out.println("Client says: " + readUTF);
-                    sendMessage(readUTF);
+                    
+                    // Save changes from client to the document.
+                    document.setText(readUTF);
+                    
+                    // Broadcast changes.
+                    broadCastDocument(document, clients);
                 }
             }
             catch(EOFException e)
@@ -79,13 +95,17 @@ public class ClientThread extends Thread
         }
     }
     
-    public void sendMessage(String message)
+    /**
+     * Broadcasts a change to just the client corresponding to the ClientThread
+     * instance.
+     */
+    public void broadCastChange()
     {
         try
         {
             if (out != null)
             {
-                out.writeUTF(message);
+                out.writeUTF(document.getText());
             }
             else
             {
@@ -97,7 +117,7 @@ public class ClientThread extends Thread
             e.printStackTrace();
         }
     }
-    
+     
     /**
      * The server can not be started if unless this method returns true. If it
      * returns false it indicates that there was an error with the connection to
@@ -107,5 +127,19 @@ public class ClientThread extends Thread
     public boolean canStart()
     {
         return canStart;
+    }
+    
+    /**
+     * Broadcasts a document to all clients in the room.
+     * @param document the document to broadcast
+     * @param clients the clients to receive the broadcast
+     */
+    private void broadCastDocument(SharedDocument document, Vector<Thread> clients)
+    {
+        for(Thread t: clients)
+        {
+            ClientThread ct = (ClientThread)t;
+            ct.broadCastChange();
+        }
     }
 }

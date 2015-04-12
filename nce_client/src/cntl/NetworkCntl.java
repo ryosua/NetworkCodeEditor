@@ -49,8 +49,6 @@ public class NetworkCntl
             OutputStream outToServer = client.getOutputStream();
             out = new DataOutputStream(outToServer);
             
-            sendMessage("Hello from " + client.getLocalSocketAddress());
-
             InputStream inFromServer = client.getInputStream();
             in = new DataInputStream(inFromServer);
             System.out.println("Server says " + in.readUTF());
