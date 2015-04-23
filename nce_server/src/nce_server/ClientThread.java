@@ -130,7 +130,7 @@ public class ClientThread extends Thread
     }
     
     /**
-     * Broadcasts a document to all clients in the room.
+     * Broadcasts a document to all the other clients.
      * @param document the document to broadcast
      * @param clients the clients to receive the broadcast
      */
@@ -139,7 +139,10 @@ public class ClientThread extends Thread
         for(Thread t: clients)
         {
             ClientThread ct = (ClientThread)t;
-            ct.broadCastChange();
+            if (ct != this)
+            {
+                ct.broadCastChange();
+            }
         }
     }
 }
