@@ -99,7 +99,7 @@ public class ClientThread extends Thread
      * Broadcasts a change to just the client corresponding to the ClientThread
      * instance.
      */
-    public void broadCastChange()
+    public void broadCastChange(SharedDocument document)
     {
         try
         {
@@ -139,9 +139,10 @@ public class ClientThread extends Thread
         for(Thread t: clients)
         {
             ClientThread ct = (ClientThread)t;
+            
             if (ct != this)
             {
-                ct.broadCastChange();
+                ct.broadCastChange(document);
             }
         }
     }
