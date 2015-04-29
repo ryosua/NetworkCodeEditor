@@ -1,12 +1,9 @@
 package cntl;
 
-import model.SharedDocument;
 import view.EditorUI;
 
 public class EditorCntl
 {    
-    private final SharedDocument document;
-    
     //UI references
     private EditorUI editorUI;
 
@@ -17,8 +14,6 @@ public class EditorCntl
     public EditorCntl(MainCntl mainCntl)
     {
         this.mainCntl = mainCntl;
-        
-        document = new SharedDocument();
     }
     
     public void openEditorUI()
@@ -37,12 +32,7 @@ public class EditorCntl
     {
         return mainCntl;
     }
-    
-    public SharedDocument getDocument()
-    {
-        return document;
-    }
-   
+
     //mutators
     
 

@@ -30,6 +30,7 @@ public class UpdatedTextAreaThread implements Runnable
                 String readUTF = in.readUTF();
                 System.out.println("Server says: " + readUTF);
                 
+                /*
                 // Update text area with input from server.
                 textArea.setText(readUTF);
                 
@@ -37,6 +38,7 @@ public class UpdatedTextAreaThread implements Runnable
                 int end = textArea.getText().length();
                 textArea.setSelectionStart(end);
                 textArea.setSelectionEnd(end);
+                */
             }
             catch(UTFDataFormatException e)
             {
