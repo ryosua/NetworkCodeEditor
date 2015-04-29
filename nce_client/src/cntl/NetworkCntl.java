@@ -51,7 +51,6 @@ public class NetworkCntl
             
             InputStream inFromServer = client.getInputStream();
             in = new DataInputStream(inFromServer);
-            System.out.println("Server says " + in.readUTF());
         }
         catch(IOException e)
         {
