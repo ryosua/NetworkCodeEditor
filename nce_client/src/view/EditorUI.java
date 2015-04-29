@@ -6,13 +6,15 @@ import cntl.MainCntl;
 import cntl.NetworkCntl;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.util.Timer;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import model.SyncFieldListener;
+import model.SaveChangesListener;
+import model.SyncFieldTimerTask;
 
 public class EditorUI extends JFrame
 {
@@ -101,8 +103,18 @@ public class EditorUI extends JFrame
         sendTextArea = new JTextArea();
         sendTextArea.setLineWrap(true);
         
+        // Get updates from the server.
         networkCntl.updateAreaFromServer(mainTextArea);
-        mainTextArea.addKeyListener(new SyncFieldListener(networkCntl, mainTextArea));
+        
+        // Save changes from the text area to the document.
+        mainTextArea.addKeyListener(new SaveChangesListener(editorCntl.getDocument(), mainTextArea));
+
+        // Send updates to the server.
+        final SyncFieldTimerTask sender  = new SyncFieldTimerTask(editorCntl.getDocument(), networkCntl);
+        Timer timer = new Timer();
+        long delay = 0;
+        long periodInMilliseconds = 15000;
+        timer.schedule(sender, delay, periodInMilliseconds);
         
         editorScrollPane = new JScrollPane(mainTextArea);
         editorScrollPane.setPreferredSize(new Dimension(435, 500));
