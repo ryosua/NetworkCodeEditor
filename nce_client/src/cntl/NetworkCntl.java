@@ -93,7 +93,9 @@ public class NetworkCntl
             throw new IllegalStateException("You must connect to the server first.");
         }
         
-        new UpdatedTextAreaThread(in, textArea).start();
+        UpdatedTextAreaThread updateRunnable = new UpdatedTextAreaThread(in, textArea);
+        Thread updateThead = new Thread(updateRunnable);
+        updateThead.start();
     }
     
     public void disconnectFromServer()
