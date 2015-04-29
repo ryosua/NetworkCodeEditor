@@ -21,5 +21,9 @@ public class App
         {
             e.printStackTrace();
         }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }  
     }
 }

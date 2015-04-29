@@ -51,7 +51,6 @@ public class NetworkCntl
             
             InputStream inFromServer = client.getInputStream();
             in = new DataInputStream(inFromServer);
-            System.out.println("Server says " + in.readUTF());
         }
         catch(IOException e)
         {
@@ -93,7 +92,9 @@ public class NetworkCntl
             throw new IllegalStateException("You must connect to the server first.");
         }
         
-        new UpdatedTextAreaThread(in, textArea).start();
+        UpdatedTextAreaThread updateRunnable = new UpdatedTextAreaThread(in, textArea);
+        Thread updateThead = new Thread(updateRunnable);
+        updateThead.start();
     }
     
     public void disconnectFromServer()
