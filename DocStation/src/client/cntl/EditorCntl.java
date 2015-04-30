@@ -1,6 +1,5 @@
 package client.cntl;
 
-import javax.swing.JTextArea;
 import model.Data;
 import client.view.EditorUI;
 

@@ -1,6 +1,5 @@
 package client.cntl;
 
-import model.User;
 import client.view.LoginUI;
 
 public class LoginCntl {

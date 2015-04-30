@@ -1,22 +1,12 @@
 package client.cntl;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.OutputStream;
 import java.io.Serializable;
-import static java.lang.System.in;
-import static java.lang.System.out;
-import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import client.model.Connection;
 import model.Data;
-import model.Document;
 
 public class DataCntl implements Serializable {
 

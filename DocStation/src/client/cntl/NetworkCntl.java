@@ -1,17 +1,11 @@
 package client.cntl;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import client.model.Connection;
-import model.Data;
-import model.Document;
-import client.view.EditorUI;
 
 public class NetworkCntl{
 
