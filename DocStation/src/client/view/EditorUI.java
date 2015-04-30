@@ -2,16 +2,11 @@ package client.view;
 
 import client.cntl.DataCntl;
 import client.cntl.EditorCntl;
-import java.awt.AWTException;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.Robot;
-import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
@@ -19,7 +14,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import model.Data;
 import model.Document;
 
 public class EditorUI extends JFrame{
