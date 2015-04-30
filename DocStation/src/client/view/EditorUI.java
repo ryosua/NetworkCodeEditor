@@ -91,7 +91,7 @@ public class EditorUI extends JFrame{
         loadFileBtn = new JButton("Load File");
         saveBtn = new JButton("Save File");
         
-        loadFileBtn.addActionListener(new LoadActionListener());
+        loadFileBtn.addActionListener(new LoadActionListener(this));
         saveBtn.addActionListener(new SaveActionListener());
                 
         mainTextArea = new JTextArea();
