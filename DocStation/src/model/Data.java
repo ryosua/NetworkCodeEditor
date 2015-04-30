@@ -17,7 +17,7 @@ public class Data implements Serializable{
     private Document doc;
     
     public Data(){
-        
+        this.doc = new Document();
     }
     
     public void setUser(User user){

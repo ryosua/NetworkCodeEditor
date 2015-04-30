@@ -6,7 +6,7 @@
 package client.cntl;
 
 import javax.swing.JTextArea;
-import client.model.Data;
+import model.Data;
 import client.view.EditorUI;
 
 /**

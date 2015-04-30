@@ -5,7 +5,7 @@
  */
 package client.cntl;
 
-import client.model.User;
+import model.User;
 import client.view.LoginUI;
 
 /**

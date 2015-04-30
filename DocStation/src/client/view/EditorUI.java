@@ -24,8 +24,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import client.model.Data;
-import client.model.Document;
+import model.Data;
+import model.Document;
 
 /**
  *

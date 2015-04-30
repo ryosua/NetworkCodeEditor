@@ -20,8 +20,8 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import client.model.Connection;
-import client.model.Data;
-import client.model.Document;
+import model.Data;
+import model.Document;
 
 /**
  *
