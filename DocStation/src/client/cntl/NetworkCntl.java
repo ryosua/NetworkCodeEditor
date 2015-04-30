@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package client.cntl;
 
 import java.io.BufferedInputStream;
@@ -18,10 +13,6 @@ import model.Data;
 import model.Document;
 import client.view.EditorUI;
 
-/**
- *
- * @author Eric
- */
 public class NetworkCntl{
 
     public static final String SERVER_NAME = "127.0.0.1";

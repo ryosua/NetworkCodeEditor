@@ -1,17 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package client.cntl;
 
 import model.User;
 import client.view.LoginUI;
 
-/**
- *
- * @author Eric
- */
 public class LoginCntl {
     
     private LoginUI loginUI;

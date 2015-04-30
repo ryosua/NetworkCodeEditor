@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package client.cntl;
 
 import java.io.DataInputStream;
@@ -23,10 +18,6 @@ import client.model.Connection;
 import model.Data;
 import model.Document;
 
-/**
- *
- * @author Eric
- */
 public class DataCntl implements Serializable {
 
     //References

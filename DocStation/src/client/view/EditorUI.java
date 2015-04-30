@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package client.view;
 
 import client.cntl.DataCntl;
@@ -27,10 +22,6 @@ import javax.swing.JTextArea;
 import model.Data;
 import model.Document;
 
-/**
- *
- * @author Eric
- */
 public class EditorUI extends JFrame{
     
     private EditorCntl editorCntl;

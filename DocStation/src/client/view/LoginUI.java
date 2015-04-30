@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package client.view;
 
 import client.cntl.DataCntl;
@@ -17,10 +12,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import model.User;
 
-/**
- *
- * @author Eric
- */
 public class LoginUI extends JFrame{
     
     private LoginCntl loginCntl;
