@@ -1,0 +1,1 @@
+We are going to copy all the source files here so they are easier to compile from the command line.
