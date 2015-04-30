@@ -2,6 +2,8 @@ package client.view;
 
 import client.cntl.DataCntl;
 import client.cntl.EditorCntl;
+import client.cntl.LoadActionListener;
+import client.cntl.SaveActionListener;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
@@ -46,11 +48,13 @@ public class EditorUI extends JFrame{
     
     private JButton logoutBtn;
     private JButton sendBtn;
+    private JButton loadFileBtn;
+    private JButton saveBtn;
 
     //contstructor
     public EditorUI(EditorCntl editorCntl){
         this.editorCntl = editorCntl;
-        setSize(800, 600);
+        setSize(900, 600);
         setTitle("Editor");
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -84,7 +88,12 @@ public class EditorUI extends JFrame{
         
         logoutBtn = new JButton("Logout");
         sendBtn = new JButton("Send");
+        loadFileBtn = new JButton("Load File");
+        saveBtn = new JButton("Save File");
         
+        loadFileBtn.addActionListener(new LoadActionListener());
+        saveBtn.addActionListener(new SaveActionListener());
+                
         mainTextArea = new JTextArea();
         mainTextArea.setLineWrap(true);
         
@@ -112,6 +121,8 @@ public class EditorUI extends JFrame{
         
         actionPanel.add(usernameLabel);
         actionPanel.add(logoutBtn);
+        actionPanel.add(loadFileBtn);
+        actionPanel.add(saveBtn);
         
         userPanel.add(connectedUsersLabel, BorderLayout.NORTH);
         userPanel.add(userScrollPane, BorderLayout.CENTER);
