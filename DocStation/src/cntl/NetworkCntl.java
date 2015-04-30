@@ -24,7 +24,7 @@ import view.EditorUI;
  */
 public class NetworkCntl{
 
-    public static final String SERVER_NAME = "192.168.254.8";
+    public static final String SERVER_NAME = "127.0.0.1";
     public static final int PORT = 5025;
 
     private LoginCntl loginCntl;

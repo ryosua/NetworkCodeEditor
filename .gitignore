@@ -33,3 +33,8 @@ hs_err_pid*
 /nce_server/nbactions.xml
 /nce_server/nb-configuration.xml
 /nce_server/.nb-gradle/
+/DocStation/nbproject/private/
+/DocStationServer/nbproject/private/
+/DocStationServer/dist/
+/DocStationServer/build/
+/DocStation/build/

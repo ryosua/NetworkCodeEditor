@@ -31,13 +31,12 @@ public class ConnectionThread extends Thread{
     
     public void run(){
         System.out.println("Listening on new ConnectionThread.");
-        Data input;
         ObjectInputStream in;
         while(true){
             try {
-            in = new ObjectInputStream(socket.getInputStream());
-            ServerDataCntl.getDataCntl().setData((Data) in.readObject());
-            broadcastObjectToList(connections);
+                in = new ObjectInputStream(socket.getInputStream());
+                ServerDataCntl.getDataCntl().setData((Data) in.readObject());
+                broadcastObjectToList(connections);
             } catch (IOException ex) {
                 ex.printStackTrace();
             } catch (ClassNotFoundException ex) {

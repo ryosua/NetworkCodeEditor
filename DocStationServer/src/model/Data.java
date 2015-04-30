@@ -13,7 +13,7 @@ import java.io.Serializable;
  */
 public class Data implements Serializable{
     
-     private User user;
+    private User user;
     private Document doc;
     
     public Data(){

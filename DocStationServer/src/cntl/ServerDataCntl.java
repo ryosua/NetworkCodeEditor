@@ -89,7 +89,6 @@ public class ServerDataCntl implements Serializable {
    
     
     public void readFromClient(ObjectInputStream in) {
-       
             try { 
                 while (true) {
                     theData = (Data) in.readObject();

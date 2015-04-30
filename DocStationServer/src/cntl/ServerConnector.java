@@ -20,18 +20,17 @@ public class ServerConnector extends Thread{
     
     private ServerSocket serverSocket;
     
-    public ServerConnector(){
-        startServer();
+    public ServerConnector(int port){
+        startServer(port);
     }
     
     public void run(){
         acceptClients();
     }
     
-    private void startServer(){
-        final int PORT = 5025;
+    private void startServer(int port){
         try {
-            serverSocket = new ServerSocket(PORT);
+            serverSocket = new ServerSocket(port);
         } catch (IOException ex) {
             ex.printStackTrace();
         }
