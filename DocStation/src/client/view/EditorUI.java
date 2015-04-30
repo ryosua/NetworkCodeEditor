@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package view;
+package client.view;
 
-import cntl.DataCntl;
-import cntl.EditorCntl;
+import client.cntl.DataCntl;
+import client.cntl.EditorCntl;
 import java.awt.AWTException;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -24,8 +24,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import model.Data;
-import model.Document;
+import client.model.Data;
+import client.model.Document;
 
 /**
  *

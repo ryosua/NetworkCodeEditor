@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cntl;
+package client.cntl;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -19,9 +19,9 @@ import static java.lang.System.out;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import model.Connection;
-import model.Data;
-import model.Document;
+import client.model.Connection;
+import client.model.Data;
+import client.model.Document;
 
 /**
  *

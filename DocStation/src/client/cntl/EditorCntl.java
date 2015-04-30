@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cntl;
+package client.cntl;
 
 import javax.swing.JTextArea;
-import model.Data;
-import view.EditorUI;
+import client.model.Data;
+import client.view.EditorUI;
 
 /**
  *

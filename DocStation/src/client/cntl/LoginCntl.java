@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cntl;
+package client.cntl;
 
-import model.User;
-import view.LoginUI;
+import client.model.User;
+import client.view.LoginUI;
 
 /**
  *

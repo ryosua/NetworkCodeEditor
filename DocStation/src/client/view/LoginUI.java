@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package view;
+package client.view;
 
-import cntl.DataCntl;
-import cntl.LoginCntl;
+import client.cntl.DataCntl;
+import client.cntl.LoginCntl;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,7 +15,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import model.User;
+import client.model.User;
 
 /**
  *
