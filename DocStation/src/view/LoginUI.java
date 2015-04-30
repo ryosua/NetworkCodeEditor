@@ -1,8 +1,12 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package view;
 
+import cntl.DataCntl;
 import cntl.LoginCntl;
-import cntl.MainCntl;
-import cntl.NetworkCntl;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,14 +15,15 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import model.LoginTask;
+import model.User;
 
-public class LoginUI extends JFrame
-{
-    //Cntl references 
-    private final LoginCntl loginCntl;
-    private final MainCntl mainCntl;
-    private final NetworkCntl networkCntl;
+/**
+ *
+ * @author Eric
+ */
+public class LoginUI extends JFrame{
+    
+    private LoginCntl loginCntl;
     
     //UI components
     private JPanel mainPanel;
@@ -34,12 +39,8 @@ public class LoginUI extends JFrame
     
     
     //contstructor
-    public LoginUI(LoginCntl loginCntl)
-    {
+    public LoginUI(LoginCntl loginCntl){
         this.loginCntl = loginCntl;
-        mainCntl = loginCntl.getMainCntl();
-        networkCntl = mainCntl.getNetworkCntl();
-        
         setSize(400, 150);
         setTitle("Login");
         setLocationRelativeTo(null);
@@ -56,8 +57,7 @@ public class LoginUI extends JFrame
     
 
     //otherMethods
-    private void initComponents()
-    {
+    private void initComponents(){
         //init all interface components
         
         //init with layouts
@@ -69,7 +69,7 @@ public class LoginUI extends JFrame
         usernameLabel = new JLabel("Select a Username: ");
         
         //init with column #
-        usernameField = new JTextField(25);
+        usernameField = new JTextField(15);
         
         //init with label text
         loginBtn = new JButton("Login");
@@ -89,33 +89,25 @@ public class LoginUI extends JFrame
         //add panels to main
         mainPanel.add(northPanel, BorderLayout.CENTER);
         mainPanel.add(southPanel, BorderLayout.SOUTH);
-        
-        this.setJMenuBar(new BasicMenuBar());
-        
         //add main to jframe
         this.add(mainPanel);
     }
     
     //actionListeners
-    private class LoginBtnListener implements ActionListener
-    {
-        @Override
-        public void actionPerformed(ActionEvent evt)
-        {
-            if(loginCntl.authenticate(usernameField.getText()))
-            {
-                // Connect to the server in a new thread.
-                LoginTask loginTask = new LoginTask(loginCntl, mainCntl, networkCntl);
-                loginTask.execute();
+    private class LoginBtnListener implements ActionListener{
+        public void actionPerformed(ActionEvent evt){
+            String name = usernameField.getText();
+            if(LoginUI.this.loginCntl.authenticate(name)){
+                User user = new User(name);
+                DataCntl.getDataCntl().getData().setUser(user);
             }
+            LoginUI.this.setVisible(false);
+            LoginUI.this.loginCntl.getEditorCntl();
         }
     }
     
-    private class ExitBtnListener implements ActionListener
-    {
-        @Override
-        public void actionPerformed(ActionEvent evt)
-        {
+    private class ExitBtnListener implements ActionListener{
+        public void actionPerformed(ActionEvent evt){
             System.exit(0);
         }
     }
