@@ -2,6 +2,7 @@ package client.view;
 
 import client.cntl.DataCntl;
 import client.cntl.EditorCntl;
+import client.cntl.FileCntl;
 import client.cntl.LoadActionListener;
 import client.cntl.SaveActionListener;
 import java.awt.BorderLayout;
@@ -96,8 +97,10 @@ public class EditorUI extends JFrame{
         mainTextArea = new JTextArea();
         mainTextArea.setLineWrap(true);
         
+        FileCntl fileCntl = new FileCntl();
+        
         mainTextArea.addKeyListener(new TextListener());
-        loadFileBtn.addActionListener(new LoadActionListener(this, mainTextArea));
+        loadFileBtn.addActionListener(new LoadActionListener(fileCntl, this, mainTextArea));
         
         userTextArea = new JTextArea();
         userTextArea.setLineWrap(true);
