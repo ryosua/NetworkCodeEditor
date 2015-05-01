@@ -14,10 +14,6 @@ public class ServerDataCntl implements Serializable {
     private static ServerDataCntl dataCntl;
     private Data theData = new Data();
     private static final String fileName = "data.ser";
-
-    private ServerDataCntl(){
-       this.readDataFile();
-    }
     
     public static ServerDataCntl getDataCntl(){
         if(dataCntl == null)
