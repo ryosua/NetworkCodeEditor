@@ -36,7 +36,12 @@ public class FileCntl {
         File file = null;
 
         fileChooser.setDialogType(dialogType);
-
+        
+        if (dialogType == JFileChooser.SAVE_DIALOG) {
+            fileChooser.setDialogTitle("Save");
+            fileChooser.setApproveButtonText("Save");
+        }
+        
         int returnVal = fileChooser.showOpenDialog(frame);
 
         if (returnVal == JFileChooser.APPROVE_OPTION) {
@@ -76,6 +81,9 @@ public class FileCntl {
     public void saveFile() {
         if (loadedFile == null) {
             loadedFile = getFileFromChooser(JFileChooser.SAVE_DIALOG);
+            if (loadedFile != null) {
+                saveFile();
+            }
         } else {
             try (PrintWriter printwriter = new PrintWriter(loadedFile)) {
                 printwriter.print(mainTextArea.getText());
