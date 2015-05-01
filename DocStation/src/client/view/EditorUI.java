@@ -92,14 +92,12 @@ public class EditorUI extends JFrame{
         loadFileBtn = new JButton("Load File");
         saveBtn = new JButton("Save File");
         
-        saveBtn.addActionListener(new SaveActionListener());
-                
         mainTextArea = new JTextArea();
         mainTextArea.setLineWrap(true);
         
-        FileCntl fileCntl = new FileCntl();
-        
         mainTextArea.addKeyListener(new TextListener());
+        FileCntl fileCntl = new FileCntl(mainTextArea);
+        saveBtn.addActionListener(new SaveActionListener(fileCntl));
         loadFileBtn.addActionListener(new LoadActionListener(fileCntl, this, mainTextArea));
         
         userTextArea = new JTextArea();
