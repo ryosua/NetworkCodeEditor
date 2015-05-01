@@ -83,7 +83,7 @@ public class EditorUI extends JFrame{
         actionPanel = new JPanel();
         chatPanel = new JPanel(new BorderLayout());
         sendPanel = new JPanel();
-        
+               
         DataCntl dataCntl = DataCntl.getDataCntl();
         User user = dataCntl.getUser();
         String username = user.getUsername();
@@ -110,6 +110,7 @@ public class EditorUI extends JFrame{
         userTextArea.setLineWrap(true);
         chatTextArea = new JTextArea();
         chatTextArea.setLineWrap(true);
+        chatTextArea.setEditable(false);
         sendTextArea = new JTextArea();
         sendTextArea.setLineWrap(true);
         
