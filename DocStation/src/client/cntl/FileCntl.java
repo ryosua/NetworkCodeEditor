@@ -54,9 +54,8 @@ public class FileCntl {
      * Loads the file chosen into the text area.
      *
      * @param file the file to load from
-     * @param mainTextArea the text area to load text into
      */
-    public void loadFile(File file, JTextArea mainTextArea) {
+    public void loadFile(File file) {
         ArrayList<String> lines = new ArrayList<>();
 
         // Save the loadedFile for saving later.
