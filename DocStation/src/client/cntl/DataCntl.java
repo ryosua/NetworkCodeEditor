@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Data;
+import model.User;
 
 public class DataCntl implements Serializable {
 
@@ -14,10 +15,8 @@ public class DataCntl implements Serializable {
 
     private static DataCntl dataCntl;
     private Data theData = new Data();
+    private User user = new User("");
 
-    private DataCntl() {
-        
-    }
 
     public static DataCntl getDataCntl() {
         if (dataCntl == null) {
@@ -50,5 +49,13 @@ public class DataCntl implements Serializable {
 
     public void setDocumentText(String text){
         theData.getDocument().setText(text);
+    }
+	
+	public User getUser(){
+        return user;
+    }
+    
+    public void setUser(User user){
+        this.user = user;
     }
 }

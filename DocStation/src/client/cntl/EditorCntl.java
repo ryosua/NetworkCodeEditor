@@ -4,18 +4,18 @@ import model.Data;
 import client.view.EditorUI;
 
 public class EditorCntl {
-    
+
     private LoginCntl loginCntl;
     private NetworkCntl networkCntl;
-    
+
     private EditorUI editorUI;
-    
-    public EditorCntl(LoginCntl parentCntl, NetworkCntl networkCntl){
+
+    public EditorCntl(LoginCntl parentCntl, NetworkCntl networkCntl) {
         this.editorUI = new EditorUI(this);
         this.networkCntl = networkCntl;
         this.loginCntl = parentCntl;
     }
-    
+
     public void updateText() {
         new Thread(new Runnable() {
             public void run() {
@@ -31,12 +31,22 @@ public class EditorCntl {
             }
         }).start();
     }
-    
-    public LoginCntl getLoginCntl(){
+
+    public void updateChat(String msg) {
+        new Thread(new Runnable() {
+            public void run() {
+                synchronized (msg) {
+                    EditorCntl.this.editorUI.getChatTextArea().append("\n" + msg);
+                }
+            }
+        }).start();
+    }
+
+    public LoginCntl getLoginCntl() {
         return loginCntl;
     }
-    
-    public NetworkCntl getNetworkCntl(){
+
+    public NetworkCntl getNetworkCntl() {
         return networkCntl;
     }
 }

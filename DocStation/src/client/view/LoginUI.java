@@ -90,7 +90,7 @@ public class LoginUI extends JFrame{
             String name = usernameField.getText();
             if(LoginUI.this.loginCntl.authenticate(name)){
                 User user = new User(name);
-                DataCntl.getDataCntl().getData().setUser(user);
+                DataCntl.getDataCntl().setUser(user);
             }
             LoginUI.this.setVisible(false);
             LoginUI.this.loginCntl.getEditorCntl();

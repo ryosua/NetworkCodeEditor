@@ -1,5 +1,7 @@
 package client.cntl;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -10,21 +12,26 @@ import java.util.logging.Logger;
 public class NetworkCntl{
 
     public static final String SERVER_NAME = "127.0.0.1";
-    public static final int PORT = 5025;
+    public static final int EDIT_PORT = 5025;
+    public static final int CHAT_PORT = 5050;
 
     private LoginCntl loginCntl;
-    
-    private Socket socket;
+	
+    private Socket editSocket;
+    private Socket chatSocket;
+    private String message;
 
     public NetworkCntl(LoginCntl parentCntl) {
         this.loginCntl = parentCntl;
         connectToServer();
         readData();
+	readMessages();
     }
 
     private void connectToServer() {
         try {
-            socket = new Socket(SERVER_NAME, PORT);
+            editSocket = new Socket(SERVER_NAME, EDIT_PORT);
+            chatSocket = new Socket(SERVER_NAME, CHAT_PORT);
             System.out.println("Connected to server.");
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -34,7 +41,7 @@ public class NetworkCntl{
     public void sendData() {
        ObjectOutputStream out;
         try {
-            out = new ObjectOutputStream(socket.getOutputStream());
+            out = new ObjectOutputStream(editSocket.getOutputStream());
             DataCntl.getDataCntl().write(out);
             System.out.println("SENDING " + DataCntl.getDataCntl().getData().getDocument().getText());
         } catch (IOException ex) {
@@ -48,7 +55,7 @@ public class NetworkCntl{
                 ObjectInputStream in;
                 while (true) {
                     try {
-                        in = new ObjectInputStream(socket.getInputStream());
+                        in = new ObjectInputStream(editSocket.getInputStream());
                         DataCntl.getDataCntl().read(in);
                         System.out.println(DataCntl.getDataCntl().getData().getDocument().getText());
                         NetworkCntl.this.loginCntl.getEditorCntl().updateText();
@@ -58,5 +65,38 @@ public class NetworkCntl{
                 }
             }
         }).start();
+    }
+	
+    public void sendMessage(){
+        DataOutputStream out;
+        try {
+            out = new DataOutputStream(chatSocket.getOutputStream());
+            out.writeUTF(message);
+            System.out.println("SENDING " + DataCntl.getDataCntl().getData().getDocument().getText());
+        } catch (IOException ex) {
+            Logger.getLogger(NetworkCntl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void readMessages(){
+         new Thread(new Runnable(){
+            public void run() {
+                DataInputStream in;
+                while (true) {
+                    try {
+                        in = new DataInputStream(chatSocket.getInputStream());
+                        message = in.readUTF();
+                        System.out.println(message);
+                        NetworkCntl.this.loginCntl.getEditorCntl().updateChat(message);
+                    } catch (IOException ex) {
+                        Logger.getLogger(NetworkCntl.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        }).start();
+    }
+    
+    public void setMessage(String str){
+        this.message = str;
     }
 }

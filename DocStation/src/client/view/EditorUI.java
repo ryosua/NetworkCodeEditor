@@ -7,6 +7,8 @@ import client.cntl.LoadActionListener;
 import client.cntl.SaveActionListener;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
@@ -81,9 +83,9 @@ public class EditorUI extends JFrame{
         chatPanel = new JPanel(new BorderLayout());
         sendPanel = new JPanel();
         
-        String name = DataCntl.getDataCntl().getData().getUser().getUsername();
+        String user = DataCntl.getDataCntl().getUser().getUsername();
         
-        usernameLabel = new JLabel("Username: " + name);
+        usernameLabel = new JLabel("Username: " + user);
         connectedUsersLabel = new JLabel("Connected users: ");
         chatLabel = new JLabel("Chat: ");
         
@@ -91,6 +93,7 @@ public class EditorUI extends JFrame{
         sendBtn = new JButton("Send");
         loadFileBtn = new JButton("Load File");
         saveBtn = new JButton("Save File");
+	sendBtn.addActionListener(new SendListener());
         
         saveBtn.addActionListener(new SaveActionListener());
                 
@@ -138,8 +141,7 @@ public class EditorUI extends JFrame{
         chatPanel.add(sendPanel, BorderLayout.SOUTH);
         
         subPanel.add(actionPanel, BorderLayout.NORTH);
-        subPanel.add(userPanel, BorderLayout.CENTER);
-        subPanel.add(chatPanel, BorderLayout.SOUTH);
+        subPanel.add(chatPanel, BorderLayout.CENTER);
         
         mainPanel.add(editorScrollPane, BorderLayout.CENTER);
         mainPanel.add(subPanel, BorderLayout.EAST);
@@ -148,6 +150,14 @@ public class EditorUI extends JFrame{
     
     public JTextArea getMainTextArea(){
         return mainTextArea;
+    }
+    
+    public JTextArea getChatTextArea(){
+        return chatTextArea;
+    }
+    
+    public JTextArea getSendTextArea(){
+        return sendTextArea;
     }
     
     public int getCursorPosition(){
@@ -160,14 +170,6 @@ public class EditorUI extends JFrame{
     
     public class TextListener implements KeyListener{
         public void keyTyped(KeyEvent ke) {
-            /*KeyEvent key = ke;
-            if((ke.getModifiers() & KeyEvent.ALT_DOWN_MASK) == KeyEvent.ALT_DOWN_MASK){
-                ke.set
-            } 
-            ke.consume();
-            keyList.add(key);
-        }*/
-           
             
             new Thread(new Runnable(){
                public void run(){
@@ -186,6 +188,17 @@ public class EditorUI extends JFrame{
         
         public void keyReleased(KeyEvent ke) {
            
+        }
+    }
+	
+	 public class SendListener implements ActionListener{
+
+        public void actionPerformed(ActionEvent ae) {
+            String text = EditorUI.this.getSendTextArea().getText();
+            EditorUI.this.getSendTextArea().setText("");
+            String user = DataCntl.getDataCntl().getUser().getUsername();
+            EditorUI.this.editorCntl.getNetworkCntl().setMessage(user + ": " + text);
+            EditorUI.this.editorCntl.getNetworkCntl().sendMessage();
         }
     }
 }
