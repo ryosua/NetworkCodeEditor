@@ -106,11 +106,13 @@ public class LoginUI extends JFrame {
     //actionListeners
     private class LoginBtnListener implements ActionListener {
 
+        @Override
         public void actionPerformed(ActionEvent evt) {
             String name = usernameField.getText();
             if (LoginUI.this.loginCntl.authenticate(name)) {
                 User user = new User(name);
-                DataCntl.getDataCntl().getData().setUser(user);
+                DataCntl dataCntl = DataCntl.getDataCntl();
+                dataCntl.getData().setUser(user);
             }
             LoginUI.this.setVisible(false);
             LoginUI.this.loginCntl.getEditorCntl();

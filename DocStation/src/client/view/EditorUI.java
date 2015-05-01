@@ -20,6 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import model.Document;
+import model.User;
 
 public class EditorUI extends JFrame{
     
@@ -83,9 +84,11 @@ public class EditorUI extends JFrame{
         chatPanel = new JPanel(new BorderLayout());
         sendPanel = new JPanel();
         
-        String user = DataCntl.getDataCntl().getUser().getUsername();
+        DataCntl dataCntl = DataCntl.getDataCntl();
+        User user = dataCntl.getUser();
+        String username = user.getUsername();
         
-        usernameLabel = new JLabel("Username: " + user);
+        usernameLabel = new JLabel("Username: " + username);
         connectedUsersLabel = new JLabel("Connected users: ");
         chatLabel = new JLabel("Chat: ");
         
