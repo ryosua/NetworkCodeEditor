@@ -16,7 +16,7 @@ public class DataCntl implements Serializable {
     private static DataCntl dataCntl;
     private Data theData = new Data();
     private User user = new User("");
-
+    private String iPAddress = "";
 
     public static DataCntl getDataCntl() {
         if (dataCntl == null) {
@@ -24,11 +24,7 @@ public class DataCntl implements Serializable {
         }
         return dataCntl;
     }
-
-    public Data getData() {
-        return theData;
-    }
-
+    
     public void write(ObjectOutputStream out){
         try {
             out.writeObject(theData);
@@ -46,6 +42,15 @@ public class DataCntl implements Serializable {
             Logger.getLogger(DataCntl.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    
+    public Data getData() {
+        return theData;
+    }
+    
+    public String getIPAddress() {
+        return iPAddress;
+    }
 
     public void setDocumentText(String text){
         theData.getDocument().setText(text);
@@ -53,6 +58,10 @@ public class DataCntl implements Serializable {
 	
 	public User getUser(){
         return user;
+    }
+        
+    public void setIPAddress(String iPAddress) {
+        this.iPAddress = iPAddress;
     }
     
     public void setUser(User user){

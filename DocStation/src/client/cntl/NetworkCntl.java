@@ -11,7 +11,6 @@ import java.util.logging.Logger;
 
 public class NetworkCntl{
 
-    public static final String SERVER_NAME = "127.0.0.1";
     public static final int EDIT_PORT = 5025;
     public static final int CHAT_PORT = 5050;
 
@@ -23,16 +22,18 @@ public class NetworkCntl{
 
     public NetworkCntl(LoginCntl parentCntl) {
         this.loginCntl = parentCntl;
-        connectToServer();
-        readData();
-	readMessages();
     }
-
-    private void connectToServer() {
+    
+    public void connectToServer() {
         try {
-            editSocket = new Socket(SERVER_NAME, EDIT_PORT);
-            chatSocket = new Socket(SERVER_NAME, CHAT_PORT);
+            DataCntl dataCntl = DataCntl.getDataCntl();
+            editSocket = new Socket(dataCntl.getIPAddress(), EDIT_PORT);
+            chatSocket = new Socket(dataCntl.getIPAddress(), CHAT_PORT);
             System.out.println("Connected to server.");
+            System.out.println("IP: " + dataCntl.getIPAddress());
+          
+            readData();
+            readMessages();
         } catch (IOException ex) {
             ex.printStackTrace();
         }

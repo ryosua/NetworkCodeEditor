@@ -31,7 +31,7 @@ public class LoginUI extends JFrame {
     private JLabel iPLabel;
 
     private JTextField usernameField;
-    private JTextField IPField;
+    private JTextField iPField;
 
     private JButton loginBtn;
     private JButton exitBtn;
@@ -40,7 +40,7 @@ public class LoginUI extends JFrame {
     //contstructor
     public LoginUI(LoginCntl loginCntl) {
         this.loginCntl = loginCntl;
-       
+
         setSize(400, 150);
         setTitle("Login");
         setLocationRelativeTo(null);
@@ -71,8 +71,8 @@ public class LoginUI extends JFrame {
 
         //init with column #
         usernameField = new JTextField(15);
-        IPField = new JTextField(20);
-        IPField.setSize(1, 10);
+        iPField = new JTextField(20);
+        iPField.setSize(1, 10);
 
         //init with label text
         loginBtn = new JButton("Login");
@@ -95,7 +95,7 @@ public class LoginUI extends JFrame {
         //add panels to main
         mainPanel.add(northPanel, BorderLayout.PAGE_START);
         mainPanel.add(joinPanel, BorderLayout.NORTH);
-        mainPanel.add(IPField, BorderLayout.CENTER);
+        mainPanel.add(iPField, BorderLayout.CENTER);
         mainPanel.add(iPLabel, BorderLayout.WEST);
         mainPanel.add(joinRoomBtn, BorderLayout.PAGE_END);
 
@@ -110,9 +110,15 @@ public class LoginUI extends JFrame {
         public void actionPerformed(ActionEvent evt) {
             String name = usernameField.getText();
             if (LoginUI.this.loginCntl.authenticate(name)) {
-                User user = new User(name);
                 DataCntl dataCntl = DataCntl.getDataCntl();
+                
+                // Set user for session.
+                User user = new User(name);
                 dataCntl.setUser(user);
+                
+                // Connect to server with user entered IP.
+                dataCntl.setIPAddress(iPField.getText());
+                loginCntl.getNetworkCntl().connectToServer();
             }
             LoginUI.this.setVisible(false);
             LoginUI.this.loginCntl.getEditorCntl();
