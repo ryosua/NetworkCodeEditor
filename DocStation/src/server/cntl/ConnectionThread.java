@@ -1,5 +1,6 @@
 package server.cntl;
 
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -27,6 +28,9 @@ public class ConnectionThread extends Thread{
                 in = new ObjectInputStream(socket.getInputStream());
                 ServerDataCntl.getDataCntl().setData((Data) in.readObject());
                 broadcastObjectToList(connections);
+            } catch (EOFException ex) {
+                System.out.println("A user logged out of the editor.");
+                break;
             } catch (IOException ex) {
                 ex.printStackTrace();
             } catch (ClassNotFoundException ex) {
