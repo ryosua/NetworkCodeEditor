@@ -91,13 +91,13 @@ public class EditorUI extends JFrame{
         loadFileBtn = new JButton("Load File");
         saveBtn = new JButton("Save File");
         
-        loadFileBtn.addActionListener(new LoadActionListener(this));
         saveBtn.addActionListener(new SaveActionListener());
                 
         mainTextArea = new JTextArea();
         mainTextArea.setLineWrap(true);
         
         mainTextArea.addKeyListener(new TextListener());
+        loadFileBtn.addActionListener(new LoadActionListener(this, mainTextArea));
         
         userTextArea = new JTextArea();
         userTextArea.setLineWrap(true);
@@ -185,5 +185,4 @@ public class EditorUI extends JFrame{
            
         }
     }
-   
 }
