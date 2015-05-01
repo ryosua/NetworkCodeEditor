@@ -5,65 +5,83 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JTextArea;
 
 /**
  * Loads and saves files.
  */
 public class FileCntl {
-    
-    private JTextArea mainTextArea;
+
+    private final JTextArea mainTextArea;
+    private final JFileChooser fileChooser;
+    private final JFrame frame;
+
     private File loadedFile;
-    
-    public FileCntl(JTextArea mainTextArea) {
+
+    public FileCntl(JFrame frame, JTextArea mainTextArea) {
+        this.frame = frame;
         this.mainTextArea = mainTextArea;
+
+        fileChooser = new JFileChooser();
     }
-       
+
+    /**
+     *
+     * @param dialogType JFileChooser.OPEN_DIALOG or JFileChooser.SAVE_DIALOG
+     * @return the file if chosen or null if canceled
+     */
+    public File getFileFromChooser(int dialogType) {
+        File file = null;
+
+        fileChooser.setDialogType(dialogType);
+
+        int returnVal = fileChooser.showOpenDialog(frame);
+
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            file = fileChooser.getSelectedFile();
+        }
+        return file;
+    }
+
     /**
      * Loads the file chosen into the text area.
+     *
      * @param file the file to load from
      * @param mainTextArea the text area to load text into
      */
     public void loadFile(File file, JTextArea mainTextArea) {
         ArrayList<String> lines = new ArrayList<>();
-        
+
         // Save the loadedFile for saving later.
         loadedFile = file;
-        
-        Scanner in = null;
-        try {
-            // Copy content from file.
-            in = new Scanner(file);
-            while(in.hasNext()) {
-               lines.add(in.nextLine());
+
+        try (Scanner in = new Scanner(file)) {
+            while (in.hasNext()) {
+                lines.add(in.nextLine());
             }
-            
+
             // Copy conent from file to text area.
             String fileContents = "";
-            for(String line: lines) {
+            for (String line : lines) {
                 fileContents += line + "\n";
             }
             mainTextArea.setText(fileContents);
-        } 
-        catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        finally {
-            in.close();
-        }
     }
-    
+
     public void saveFile() {
-        PrintWriter printwriter = null;
-        try {
-            printwriter = new PrintWriter(loadedFile);
-            printwriter.print(mainTextArea.getText());
+        if (loadedFile == null) {
+            loadedFile = getFileFromChooser(JFileChooser.SAVE_DIALOG);
+        } else {
+            try (PrintWriter printwriter = new PrintWriter(loadedFile)) {
+                printwriter.print(mainTextArea.getText());
+            } catch (FileNotFoundException ex) {
+                System.out.println(ex.getMessage());
+            }
         }
-        catch (FileNotFoundException ex) {
-            System.out.println(ex.getMessage());
-        }
-        finally {
-            printwriter.close();
-        }  
     }
 }

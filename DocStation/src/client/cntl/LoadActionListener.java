@@ -4,35 +4,20 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JTextArea;
 
 public class LoadActionListener implements ActionListener {
 
-    private final JFileChooser fileChooser;
     private final FileCntl fileCntl;
-    private final JFrame frame;
-    private final JTextArea mainTextArea;
 
-    public LoadActionListener(FileCntl fileCntl, JFrame frame, JTextArea mainTextArea) {
+    public LoadActionListener(FileCntl fileCntl) {
         this.fileCntl = fileCntl;
-        this.frame = frame;
-        this.mainTextArea = mainTextArea;
-        
-        fileChooser = new JFileChooser();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        int returnVal = fileChooser.showOpenDialog(frame);
+        File file = fileCntl.getFileFromChooser(JFileChooser.OPEN_DIALOG);
 
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            File file = fileChooser.getSelectedFile();
-
-            // Open the file.
-            System.out.println("Opening: " + file.getName() + ".");
-            fileCntl.loadFile(file, mainTextArea);
-        } else {
+        if (file == null) {
             System.out.println("Action canceled");
         }
     }
