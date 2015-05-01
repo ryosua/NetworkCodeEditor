@@ -4,6 +4,7 @@ import cntl.LoginCntl;
 import cntl.MainCntl;
 import cntl.NetworkCntl;
 import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
@@ -24,13 +25,21 @@ public class LoginUI extends JFrame
     private JPanel mainPanel;
     private JPanel northPanel;
     private JPanel southPanel;
+    private JPanel joinPanel;
+    private JPanel joinbtnPanel;
+    private JPanel idFieldPanel;
+    private JPanel IPFieldPanel;
+    
     
     private JLabel usernameLabel;
+    private JLabel IPLabel;
     
     private JTextField usernameField;
+    private JTextField IPField;
     
     private JButton loginBtn;
     private JButton exitBtn;
+    private JButton joinRoomBtn;
     
     
     //contstructor
@@ -47,6 +56,7 @@ public class LoginUI extends JFrame
         setResizable(false);
         initComponents();
         setVisible(true);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
     
     //accessors
@@ -63,32 +73,47 @@ public class LoginUI extends JFrame
         //init with layouts
         mainPanel = new JPanel(new BorderLayout());
         northPanel = new JPanel();
-        southPanel = new JPanel();
+        southPanel = new JPanel(new GridLayout(0,2));
+        joinPanel = new JPanel();
+        joinbtnPanel = new JPanel(new GridLayout(3,1));
+        idFieldPanel = new JPanel();
+        
+        
         
         //init with label text
         usernameLabel = new JLabel("Select a Username: ");
+        IPLabel = new JLabel("IP Address: ");
         
         //init with column #
-        usernameField = new JTextField(25);
+        usernameField = new JTextField(15);
+        IPField = new JTextField(20);
+        IPField.setSize(1, 10);
         
         //init with label text
         loginBtn = new JButton("Login");
+        loginBtn.setSize(20, 5);
         exitBtn = new JButton("Exit");
+        joinRoomBtn = new JButton("Join Room");
         
         //set btn listeners
-        loginBtn.addActionListener(new LoginBtnListener());
+        joinRoomBtn.addActionListener(new LoginBtnListener());
         exitBtn.addActionListener(new ExitBtnListener());
         
         //add components to subpanels panels
         northPanel.add(usernameLabel);
         northPanel.add(usernameField);
         
-        southPanel.add(exitBtn);
-        southPanel.add(loginBtn);
-        
+                        
+        joinbtnPanel.add(joinRoomBtn, BorderLayout.NORTH);
+          
+        southPanel.add(joinPanel);
+                       
         //add panels to main
-        mainPanel.add(northPanel, BorderLayout.CENTER);
-        mainPanel.add(southPanel, BorderLayout.SOUTH);
+        mainPanel.add(northPanel, BorderLayout.PAGE_START);
+        mainPanel.add(joinPanel, BorderLayout.NORTH);
+        mainPanel.add(IPField, BorderLayout.CENTER);
+        mainPanel.add(IPLabel, BorderLayout.WEST);
+        mainPanel.add(joinRoomBtn, BorderLayout.PAGE_END);
         
         this.setJMenuBar(new BasicMenuBar());
         
@@ -110,6 +135,13 @@ public class LoginUI extends JFrame
             }
         }
     }
+        public void actionPerfromed(ActionEvent evt)
+        {
+            if(loginCntl.authenticate(IPField.getText()))
+            {
+                //IP actionPerformed
+            }
+        }
     
     private class ExitBtnListener implements ActionListener
     {
