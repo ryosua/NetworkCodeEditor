@@ -13,8 +13,7 @@ public class SaveActionListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println("Save button pressed.");
-        fileCntl.saveFile();
+        fileCntl.onSaveFileButtonPress();
     }
 
 }

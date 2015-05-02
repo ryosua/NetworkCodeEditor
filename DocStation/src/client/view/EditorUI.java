@@ -1,5 +1,6 @@
 package client.view;
 
+import client.cntl.AutoSaveTimerTask;
 import client.cntl.DataCntl;
 import client.cntl.EditorCntl;
 import client.cntl.FileCntl;
@@ -12,6 +13,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
+import java.util.Timer;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
@@ -148,6 +150,14 @@ public class EditorUI extends JFrame{
         mainPanel.add(editorScrollPane, BorderLayout.CENTER);
         mainPanel.add(subPanel, BorderLayout.EAST);
         this.add(mainPanel);
+        
+        // Start autosaving the doc.
+        // It only saves if a file is loaded.
+        AutoSaveTimerTask saver  = new AutoSaveTimerTask(fileCntl);
+        Timer timer = new Timer();
+        long delay = 0;
+        long periodInMilliseconds = 30000;
+        timer.schedule(saver, delay, periodInMilliseconds);
     }
     
     public JTextArea getMainTextArea(){

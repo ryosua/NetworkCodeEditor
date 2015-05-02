@@ -76,19 +76,32 @@ public class FileCntl {
             e.printStackTrace();
         }
     }
-
-    public void saveFile() {
+    
+    /**
+     * The method called by the SaveActionListener.
+     */
+    public void onSaveFileButtonPress() {
         if (loadedFile == null) {
             loadedFile = getFileFromChooser(JFileChooser.SAVE_DIALOG);
             if (loadedFile != null) {
                 saveFile();
             }
-        } else {
+        }
+        else {
+            saveFile();
+        }
+    }
+    
+    /**
+     * Saves the loaded file.
+     */
+    public void saveFile() {
+        if (loadedFile != null) {
             try (PrintWriter printwriter = new PrintWriter(loadedFile)) {
                 printwriter.print(mainTextArea.getText());
             } catch (FileNotFoundException ex) {
                 System.out.println(ex.getMessage());
-            }
-        }
+            }  
+        } 
     }
 }
