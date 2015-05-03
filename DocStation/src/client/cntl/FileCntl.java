@@ -23,12 +23,11 @@ public class FileCntl {
    
     private File loadedFile;
 
-    public FileCntl(JList fileList, JFrame frame, JTextArea mainTextArea) {
+    public FileCntl(JFileChooser fileChooser, JList fileList, JFrame frame, JTextArea mainTextArea) {
+        this.fileChooser = fileChooser;
         this.fileList = fileList;
         this.frame = frame;
-        this.mainTextArea = mainTextArea;
-
-        fileChooser = new JFileChooser();
+        this.mainTextArea = mainTextArea;        
     }
 
     /**
@@ -60,28 +59,29 @@ public class FileCntl {
      * @param file the file to load from
      */
     public void loadFile(File file) {
-        ArrayList<String> lines = new ArrayList<>();
+        // Update the file list.
+        addFileToList(file);
+        
+        if (file.isFile() == true) {
+            ArrayList<String> lines = new ArrayList<>();
 
-        // Save the loadedFile for saving later.
-        loadedFile = file;
-
-        try (Scanner in = new Scanner(file)) {
-            while (in.hasNext()) {
-                lines.add(in.nextLine());
-            }
-
+            // Save the loadedFile for saving later.
+            loadedFile = file;
+            
             // Copy conent from file to text area.
-            String fileContents = "";
-            for (String line : lines) {
-                fileContents += line + "\n";
+            try (Scanner in = new Scanner(file)) {
+                while (in.hasNext()) {
+                    lines.add(in.nextLine());
+                }
+
+                String fileContents = "";
+                for (String line : lines) {
+                    fileContents += line + "\n";
+                }
+                mainTextArea.setText(fileContents);  
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
             }
-            mainTextArea.setText(fileContents);
-            
-            // Update the file list.
-            addFileToList(file);
-            
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         }
     }
     
@@ -113,7 +113,25 @@ public class FileCntl {
         } 
     }
     
+    /**
+     * Adds a File to the list.
+     * @param file an object of type File, includes directory.
+     */
     private void addFileToList(File file) {
-        ((DefaultListModel)(fileList.getModel())).addElement(file.getName());
+        DefaultListModel model = ((DefaultListModel)(fileList.getModel()));
+        
+        // Clear the list first.
+        model.clear();
+        
+        boolean isDirectory = file.isDirectory();
+        if (isDirectory == true) {
+            File[] files = file.listFiles();
+            for(File f: files) {
+                 model.addElement(f.getName());
+            }
+        }
+        else {
+            model.addElement(file.getName());
+        }
     }
 }

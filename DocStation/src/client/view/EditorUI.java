@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Timer;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
 import javax.swing.JLabel;
@@ -107,10 +108,13 @@ public class EditorUI extends JFrame{
         mainTextArea.setLineWrap(true);
         
         DefaultListModel fileListModel = new DefaultListModel();
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogType(fileChooser.FILES_AND_DIRECTORIES);
+        fileChooser.setFileSelectionMode(fileChooser.FILES_AND_DIRECTORIES);
         fileList = new JList(fileListModel);
         
         mainTextArea.addKeyListener(new TextListener());
-        FileCntl fileCntl = new FileCntl(fileList, this, mainTextArea);
+        FileCntl fileCntl = new FileCntl(fileChooser, fileList, this, mainTextArea);
         saveBtn.addActionListener(new SaveActionListener(fileCntl));
         loadFileBtn.addActionListener(new LoadActionListener(fileCntl));
        
