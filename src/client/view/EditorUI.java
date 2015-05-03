@@ -1,76 +1,76 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package client.view;
 
+import client.cntl.AutoSaveTimerTask;
 import client.cntl.DataCntl;
 import client.cntl.EditorCntl;
-import java.awt.AWTException;
+import client.cntl.FileCntl;
+import client.cntl.LoadActionListener;
+import client.cntl.LogoutListener;
+import client.cntl.SaveActionListener;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.Robot;
-import java.awt.event.InputEvent;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Timer;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import model.Data;
 import model.Document;
+import model.User;
 
-/**
- *
- * @author Eric
- */
 public class EditorUI extends JFrame{
     
-    private EditorCntl editorCntl;
+    private final EditorCntl editorCntl;
     
-    private ArrayList<KeyEvent> keyList = new ArrayList<KeyEvent>();
+    private ArrayList<KeyEvent> keyList = new ArrayList<>();
     
      //UI components
     private JPanel mainPanel;
     private JPanel subPanel;
     private JPanel actionPanel;
-    private JPanel userPanel;
+    private JPanel filesPanel;
     private JPanel chatPanel;
     private JPanel sendPanel;
     
     private JScrollPane editorScrollPane;
-    private JScrollPane userScrollPane;
+    private JScrollPane filesScollPane;
     private JScrollPane chatScrollPane;
     private JScrollPane sendScrollPane;
     
     private JTextArea mainTextArea;
-    private JTextArea userTextArea;
     private JTextArea chatTextArea;
     private JTextArea sendTextArea;
     
     private JLabel usernameLabel;
     private JLabel chatLabel;
-    private JLabel connectedUsersLabel;
+    private JLabel filesLabel;
+    
+    private JList fileList;
     
     private JButton logoutBtn;
     private JButton sendBtn;
+    private JButton loadFileBtn;
+    private JButton saveBtn;
 
     //contstructor
     public EditorUI(EditorCntl editorCntl){
         this.editorCntl = editorCntl;
-        setSize(800, 600);
+        setSize(900, 600);
         setTitle("Editor");
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setFocusable(true);
-        setResizable(false);
+        setResizable(true);
         initComponents();
         setVisible(true);
         //new TextUpdater(mainTextArea).start();
@@ -86,38 +86,53 @@ public class EditorUI extends JFrame{
     private void initComponents(){
         mainPanel = new JPanel(new BorderLayout());
         subPanel = new JPanel(new BorderLayout());
-        userPanel = new JPanel(new BorderLayout());
+        filesPanel = new JPanel(new BorderLayout());
         actionPanel = new JPanel();
         chatPanel = new JPanel(new BorderLayout());
         sendPanel = new JPanel();
+               
+        DataCntl dataCntl = DataCntl.getDataCntl();
+        User user = dataCntl.getUser();
+        String username = user.getUsername();
         
-        String name = DataCntl.getDataCntl().getData().getUser().getUsername();
-        
-        usernameLabel = new JLabel("Username: " + name);
-        connectedUsersLabel = new JLabel("Connected users: ");
+        usernameLabel = new JLabel("Username: " + username);
+        filesLabel = new JLabel("Files: ");
         chatLabel = new JLabel("Chat: ");
         
         logoutBtn = new JButton("Logout");
+        logoutBtn.addActionListener(new LogoutListener());
         sendBtn = new JButton("Send");
+        loadFileBtn = new JButton("Load File");
+        saveBtn = new JButton("Save File");
+	sendBtn.addActionListener(new SendListener());
         
         mainTextArea = new JTextArea();
         mainTextArea.setLineWrap(true);
         
-        mainTextArea.addKeyListener(new TextListener());
+        DefaultListModel fileListModel = new DefaultListModel();
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogType(fileChooser.FILES_AND_DIRECTORIES);
+        fileChooser.setFileSelectionMode(fileChooser.FILES_AND_DIRECTORIES);
+        fileList = new JList(fileListModel);
         
-        userTextArea = new JTextArea();
-        userTextArea.setLineWrap(true);
+        TextListener textListener = new TextListener();
+        mainTextArea.addKeyListener(textListener);
+        FileCntl fileCntl = new FileCntl(fileChooser, fileList, this, mainTextArea, textListener);
+        saveBtn.addActionListener(new SaveActionListener(fileCntl));
+        loadFileBtn.addActionListener(new LoadActionListener(fileCntl));
+       
         chatTextArea = new JTextArea();
         chatTextArea.setLineWrap(true);
+        chatTextArea.setEditable(false);
         sendTextArea = new JTextArea();
         sendTextArea.setLineWrap(true);
         
         editorScrollPane = new JScrollPane(mainTextArea);
         editorScrollPane.setPreferredSize(new Dimension(435, 500));
         editorScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        userScrollPane = new JScrollPane(userTextArea);
-        userScrollPane.setPreferredSize(new Dimension(100, 75));
-        userScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        filesScollPane = new JScrollPane(fileList);
+        filesScollPane.setPreferredSize(new Dimension(100, 75));
+        filesScollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         sendScrollPane = new JScrollPane(sendTextArea);
         sendScrollPane.setPreferredSize(new Dimension(210, 50));
         sendScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -127,9 +142,11 @@ public class EditorUI extends JFrame{
         
         actionPanel.add(usernameLabel);
         actionPanel.add(logoutBtn);
+        actionPanel.add(loadFileBtn);
+        actionPanel.add(saveBtn);
         
-        userPanel.add(connectedUsersLabel, BorderLayout.NORTH);
-        userPanel.add(userScrollPane, BorderLayout.CENTER);
+        filesPanel.add(filesLabel, BorderLayout.NORTH);
+        filesPanel.add(filesScollPane, BorderLayout.CENTER);
         
         sendPanel.add(sendScrollPane);
         sendPanel.add(sendBtn);
@@ -139,16 +156,34 @@ public class EditorUI extends JFrame{
         chatPanel.add(sendPanel, BorderLayout.SOUTH);
         
         subPanel.add(actionPanel, BorderLayout.NORTH);
-        subPanel.add(userPanel, BorderLayout.CENTER);
-        subPanel.add(chatPanel, BorderLayout.SOUTH);
+        subPanel.add(chatPanel, BorderLayout.CENTER);
         
         mainPanel.add(editorScrollPane, BorderLayout.CENTER);
         mainPanel.add(subPanel, BorderLayout.EAST);
+        mainPanel.add(filesPanel, BorderLayout.WEST);
+        
         this.add(mainPanel);
+        
+        // Start autosaving the doc.
+        // It only saves if a file is loaded.
+        AutoSaveTimerTask saver  = new AutoSaveTimerTask(fileCntl);
+        Timer timer = new Timer(true);
+        
+        long delay = 0;
+        long periodInMilliseconds = 30000;
+        timer.schedule(saver, delay, periodInMilliseconds);
     }
     
     public JTextArea getMainTextArea(){
         return mainTextArea;
+    }
+    
+    public JTextArea getChatTextArea(){
+        return chatTextArea;
+    }
+    
+    public JTextArea getSendTextArea(){
+        return sendTextArea;
     }
     
     public int getCursorPosition(){
@@ -160,34 +195,43 @@ public class EditorUI extends JFrame{
     }
     
     public class TextListener implements KeyListener{
-        public void keyTyped(KeyEvent ke) {
-            /*KeyEvent key = ke;
-            if((ke.getModifiers() & KeyEvent.ALT_DOWN_MASK) == KeyEvent.ALT_DOWN_MASK){
-                ke.set
-            } 
-            ke.consume();
-            keyList.add(key);
-        }*/
-           
-            
-            new Thread(new Runnable(){
-               public void run(){
-                   Document doc = DataCntl.getDataCntl().getData().getDocument();
-                   synchronized (doc) {
-                       String text = EditorUI.this.getMainTextArea().getText();
-                       DataCntl.getDataCntl().getData().getDocument().setText(text);
-                       EditorUI.this.editorCntl.getNetworkCntl().sendData();
-                   }
-               } 
+        
+        public void sendData() {
+            new Thread(() -> {
+                Document doc = DataCntl.getDataCntl().getData().getDocument();
+                synchronized (doc) {
+                    String text = EditorUI.this.getMainTextArea().getText();
+                    DataCntl.getDataCntl().getData().getDocument().setText(text);
+                    EditorUI.this.editorCntl.getNetworkCntl().sendData();
+                } 
             }).start();
         }
+                
+        @Override
+        public void keyTyped(KeyEvent ke) {
+            sendData();
+        }
+        
+        @Override
         public void keyPressed(KeyEvent ke) {
             
         }
         
+        @Override
         public void keyReleased(KeyEvent ke) {
            
         }
     }
-   
+	
+    public class SendListener implements ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent ae) {
+            String text = EditorUI.this.getSendTextArea().getText();
+            EditorUI.this.getSendTextArea().setText("");
+            String user = DataCntl.getDataCntl().getUser().getUsername();
+            EditorUI.this.editorCntl.getNetworkCntl().setMessage(user + ": " + text);
+            EditorUI.this.editorCntl.getNetworkCntl().sendMessage();
+        }
+    }
 }

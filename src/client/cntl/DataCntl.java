@@ -1,42 +1,22 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package client.cntl;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.OutputStream;
 import java.io.Serializable;
-import static java.lang.System.in;
-import static java.lang.System.out;
-import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import client.model.Connection;
 import model.Data;
-import model.Document;
+import model.User;
 
-/**
- *
- * @author Eric
- */
 public class DataCntl implements Serializable {
 
     //References
 
     private static DataCntl dataCntl;
     private Data theData = new Data();
-
-    private DataCntl() {
-        
-    }
+    private User user = new User("");
+    private String iPAddress = "";
 
     public static DataCntl getDataCntl() {
         if (dataCntl == null) {
@@ -44,11 +24,7 @@ public class DataCntl implements Serializable {
         }
         return dataCntl;
     }
-
-    public Data getData() {
-        return theData;
-    }
-
+    
     public void write(ObjectOutputStream out){
         try {
             out.writeObject(theData);
@@ -66,8 +42,29 @@ public class DataCntl implements Serializable {
             Logger.getLogger(DataCntl.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    
+    public Data getData() {
+        return theData;
+    }
+    
+    public String getIPAddress() {
+        return iPAddress;
+    }
 
     public void setDocumentText(String text){
         theData.getDocument().setText(text);
+    }
+	
+	public User getUser(){
+        return user;
+    }
+        
+    public void setIPAddress(String iPAddress) {
+        this.iPAddress = iPAddress;
+    }
+    
+    public void setUser(User user){
+        this.user = user;
     }
 }

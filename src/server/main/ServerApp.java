@@ -1,16 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package server.main;
 
+import server.cntl.ChatConnector;
 import server.cntl.ServerConnector;
 
-/**
- *
- * @author Eric
- */
 public class ServerApp {
 
     /**
@@ -19,5 +11,7 @@ public class ServerApp {
     public static void main(String[] args) {
         ServerConnector connector = new ServerConnector(5025);
         connector.start();
+	ChatConnector conn = new ChatConnector(5050);
+        conn.start();
     }
 }

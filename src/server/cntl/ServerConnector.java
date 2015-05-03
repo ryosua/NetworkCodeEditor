@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package server.cntl;
 
 import java.io.IOException;
@@ -10,10 +5,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
-/**
- *
- * @author Eric
- */
 public class ServerConnector extends Thread{
     
     private ArrayList<ConnectionThread> connections = new ArrayList<ConnectionThread>();

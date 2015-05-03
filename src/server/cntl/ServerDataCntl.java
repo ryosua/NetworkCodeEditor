@@ -1,15 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package server.cntl;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.EOFException;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -17,27 +7,13 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import static java.lang.System.out;
-import java.net.Socket;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import model.Data;
-import model.Document;
 
-/**
- *
- * @author Eric
- */
 public class ServerDataCntl implements Serializable {
     //References
     private static ServerDataCntl dataCntl;
     private Data theData = new Data();
     private static final String fileName = "data.ser";
-
-    private ServerDataCntl(){
-       this.readDataFile();
-    }
     
     public static ServerDataCntl getDataCntl(){
         if(dataCntl == null)
