@@ -5,8 +5,10 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
+import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JList;
 import javax.swing.JTextArea;
 
 /**
@@ -16,11 +18,13 @@ public class FileCntl {
 
     private final JTextArea mainTextArea;
     private final JFileChooser fileChooser;
+    private final JList fileList;
     private final JFrame frame;
-
+   
     private File loadedFile;
 
-    public FileCntl(JFrame frame, JTextArea mainTextArea) {
+    public FileCntl(JList fileList, JFrame frame, JTextArea mainTextArea) {
+        this.fileList = fileList;
         this.frame = frame;
         this.mainTextArea = mainTextArea;
 
@@ -72,6 +76,10 @@ public class FileCntl {
                 fileContents += line + "\n";
             }
             mainTextArea.setText(fileContents);
+            
+            // Update the file list.
+            addFileToList(file);
+            
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -103,5 +111,9 @@ public class FileCntl {
                 System.out.println(ex.getMessage());
             }  
         } 
+    }
+    
+    private void addFileToList(File file) {
+        ((DefaultListModel)(fileList.getModel())).addElement(file.getName());
     }
 }

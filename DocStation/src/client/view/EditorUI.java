@@ -14,10 +14,12 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Timer;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -34,23 +36,24 @@ public class EditorUI extends JFrame{
     private JPanel mainPanel;
     private JPanel subPanel;
     private JPanel actionPanel;
-    private JPanel userPanel;
+    private JPanel filesPanel;
     private JPanel chatPanel;
     private JPanel sendPanel;
     
     private JScrollPane editorScrollPane;
-    private JScrollPane userScrollPane;
+    private JScrollPane filesScollPane;
     private JScrollPane chatScrollPane;
     private JScrollPane sendScrollPane;
     
     private JTextArea mainTextArea;
-    private JTextArea userTextArea;
     private JTextArea chatTextArea;
     private JTextArea sendTextArea;
     
     private JLabel usernameLabel;
     private JLabel chatLabel;
-    private JLabel connectedUsersLabel;
+    private JLabel filesLabel;
+    
+    private JList fileList;
     
     private JButton logoutBtn;
     private JButton sendBtn;
@@ -81,7 +84,7 @@ public class EditorUI extends JFrame{
     private void initComponents(){
         mainPanel = new JPanel(new BorderLayout());
         subPanel = new JPanel(new BorderLayout());
-        userPanel = new JPanel(new BorderLayout());
+        filesPanel = new JPanel(new BorderLayout());
         actionPanel = new JPanel();
         chatPanel = new JPanel(new BorderLayout());
         sendPanel = new JPanel();
@@ -91,7 +94,7 @@ public class EditorUI extends JFrame{
         String username = user.getUsername();
         
         usernameLabel = new JLabel("Username: " + username);
-        connectedUsersLabel = new JLabel("Connected users: ");
+        filesLabel = new JLabel("Files: ");
         chatLabel = new JLabel("Chat: ");
         
         logoutBtn = new JButton("Logout");
@@ -103,13 +106,14 @@ public class EditorUI extends JFrame{
         mainTextArea = new JTextArea();
         mainTextArea.setLineWrap(true);
         
+        DefaultListModel fileListModel = new DefaultListModel();
+        fileList = new JList(fileListModel);
+        
         mainTextArea.addKeyListener(new TextListener());
-        FileCntl fileCntl = new FileCntl(this, mainTextArea);
+        FileCntl fileCntl = new FileCntl(fileList, this, mainTextArea);
         saveBtn.addActionListener(new SaveActionListener(fileCntl));
         loadFileBtn.addActionListener(new LoadActionListener(fileCntl));
-        
-        userTextArea = new JTextArea();
-        userTextArea.setLineWrap(true);
+       
         chatTextArea = new JTextArea();
         chatTextArea.setLineWrap(true);
         chatTextArea.setEditable(false);
@@ -119,9 +123,9 @@ public class EditorUI extends JFrame{
         editorScrollPane = new JScrollPane(mainTextArea);
         editorScrollPane.setPreferredSize(new Dimension(435, 500));
         editorScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        userScrollPane = new JScrollPane(userTextArea);
-        userScrollPane.setPreferredSize(new Dimension(100, 75));
-        userScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        filesScollPane = new JScrollPane(fileList);
+        filesScollPane.setPreferredSize(new Dimension(100, 75));
+        filesScollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         sendScrollPane = new JScrollPane(sendTextArea);
         sendScrollPane.setPreferredSize(new Dimension(210, 50));
         sendScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -134,8 +138,8 @@ public class EditorUI extends JFrame{
         actionPanel.add(loadFileBtn);
         actionPanel.add(saveBtn);
         
-        userPanel.add(connectedUsersLabel, BorderLayout.NORTH);
-        userPanel.add(userScrollPane, BorderLayout.CENTER);
+        filesPanel.add(filesLabel, BorderLayout.NORTH);
+        filesPanel.add(filesScollPane, BorderLayout.CENTER);
         
         sendPanel.add(sendScrollPane);
         sendPanel.add(sendBtn);
@@ -149,6 +153,8 @@ public class EditorUI extends JFrame{
         
         mainPanel.add(editorScrollPane, BorderLayout.CENTER);
         mainPanel.add(subPanel, BorderLayout.EAST);
+        mainPanel.add(filesPanel, BorderLayout.WEST);
+        
         this.add(mainPanel);
         
         // Start autosaving the doc.
