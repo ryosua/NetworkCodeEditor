@@ -5,6 +5,7 @@ import client.cntl.DataCntl;
 import client.cntl.EditorCntl;
 import client.cntl.FileCntl;
 import client.cntl.LoadActionListener;
+import client.cntl.LogoutListener;
 import client.cntl.SaveActionListener;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -99,6 +100,7 @@ public class EditorUI extends JFrame{
         chatLabel = new JLabel("Chat: ");
         
         logoutBtn = new JButton("Logout");
+        logoutBtn.addActionListener(new LogoutListener());
         sendBtn = new JButton("Send");
         loadFileBtn = new JButton("Load File");
         saveBtn = new JButton("Save File");
@@ -164,7 +166,8 @@ public class EditorUI extends JFrame{
         // Start autosaving the doc.
         // It only saves if a file is loaded.
         AutoSaveTimerTask saver  = new AutoSaveTimerTask(fileCntl);
-        Timer timer = new Timer();
+        Timer timer = new Timer(true);
+        
         long delay = 0;
         long periodInMilliseconds = 30000;
         timer.schedule(saver, delay, periodInMilliseconds);
