@@ -65,7 +65,7 @@ public class EditorUI extends JFrame{
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setFocusable(true);
-        setResizable(false);
+        setResizable(true);
         initComponents();
         setVisible(true);
         //new TextUpdater(mainTextArea).start();
