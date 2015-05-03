@@ -1,5 +1,6 @@
 package client.cntl;
 
+import client.view.EditorUI.TextListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -21,15 +22,19 @@ public class FileCntl {
     private final JFileChooser fileChooser;
     private final JList fileList;
     private final JFrame frame;
-    private final HashMap<String, File> map = new HashMap();
+    private final TextListener textListener;
+    private final HashMap<String, File> map; 
    
     private File loadedFile;
 
-    public FileCntl(JFileChooser fileChooser, JList fileList, JFrame frame, JTextArea mainTextArea) {
+    public FileCntl(JFileChooser fileChooser, JList fileList, JFrame frame, JTextArea mainTextArea, TextListener textListener) {
         this.fileChooser = fileChooser;
         this.fileList = fileList;
         this.frame = frame;
         this.mainTextArea = mainTextArea;
+        this.textListener = textListener;
+        
+        map = new HashMap();
         
         fileList.addMouseListener(new FileSelectedListener(this));
     }
@@ -84,7 +89,11 @@ public class FileCntl {
                 for (String line : lines) {
                     fileContents += line + "\n";
                 }
-                mainTextArea.setText(fileContents);  
+                mainTextArea.setText(fileContents);
+                
+                // Send the contents of the file to other clients.
+                textListener.sendData();
+                
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }

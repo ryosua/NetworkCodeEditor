@@ -30,9 +30,9 @@ import model.User;
 
 public class EditorUI extends JFrame{
     
-    private EditorCntl editorCntl;
+    private final EditorCntl editorCntl;
     
-    private ArrayList<KeyEvent> keyList = new ArrayList<KeyEvent>();
+    private ArrayList<KeyEvent> keyList = new ArrayList<>();
     
      //UI components
     private JPanel mainPanel;
@@ -115,8 +115,9 @@ public class EditorUI extends JFrame{
         fileChooser.setFileSelectionMode(fileChooser.FILES_AND_DIRECTORIES);
         fileList = new JList(fileListModel);
         
-        mainTextArea.addKeyListener(new TextListener());
-        FileCntl fileCntl = new FileCntl(fileChooser, fileList, this, mainTextArea);
+        TextListener textListener = new TextListener();
+        mainTextArea.addKeyListener(textListener);
+        FileCntl fileCntl = new FileCntl(fileChooser, fileList, this, mainTextArea, textListener);
         saveBtn.addActionListener(new SaveActionListener(fileCntl));
         loadFileBtn.addActionListener(new LoadActionListener(fileCntl));
        
@@ -194,30 +195,37 @@ public class EditorUI extends JFrame{
     }
     
     public class TextListener implements KeyListener{
-        public void keyTyped(KeyEvent ke) {
-            
-            new Thread(new Runnable(){
-               public void run(){
-                   Document doc = DataCntl.getDataCntl().getData().getDocument();
-                   synchronized (doc) {
-                       String text = EditorUI.this.getMainTextArea().getText();
-                       DataCntl.getDataCntl().getData().getDocument().setText(text);
-                       EditorUI.this.editorCntl.getNetworkCntl().sendData();
-                   }
-               } 
+        
+        public void sendData() {
+            new Thread(() -> {
+                Document doc = DataCntl.getDataCntl().getData().getDocument();
+                synchronized (doc) {
+                    String text = EditorUI.this.getMainTextArea().getText();
+                    DataCntl.getDataCntl().getData().getDocument().setText(text);
+                    EditorUI.this.editorCntl.getNetworkCntl().sendData();
+                } 
             }).start();
         }
+                
+        @Override
+        public void keyTyped(KeyEvent ke) {
+            sendData();
+        }
+        
+        @Override
         public void keyPressed(KeyEvent ke) {
             
         }
         
+        @Override
         public void keyReleased(KeyEvent ke) {
            
         }
     }
 	
-	 public class SendListener implements ActionListener{
+    public class SendListener implements ActionListener{
 
+        @Override
         public void actionPerformed(ActionEvent ae) {
             String text = EditorUI.this.getSendTextArea().getText();
             EditorUI.this.getSendTextArea().setText("");
