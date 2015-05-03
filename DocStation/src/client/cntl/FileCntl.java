@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
@@ -20,6 +21,7 @@ public class FileCntl {
     private final JFileChooser fileChooser;
     private final JList fileList;
     private final JFrame frame;
+    private final HashMap<String, File> map = new HashMap();
    
     private File loadedFile;
 
@@ -27,7 +29,9 @@ public class FileCntl {
         this.fileChooser = fileChooser;
         this.fileList = fileList;
         this.frame = frame;
-        this.mainTextArea = mainTextArea;        
+        this.mainTextArea = mainTextArea;
+        
+        fileList.addMouseListener(new FileSelectedListener(this));
     }
 
     /**
@@ -57,11 +61,13 @@ public class FileCntl {
      * Loads the file chosen into the text area.
      *
      * @param file the file to load from
+     * @param updateList whether or not to update the list.
      */
-    public void loadFile(File file) {
-        // Update the file list.
-        addFileToList(file);
-        
+    public void loadFile(File file, boolean updateList) {
+        if(updateList == true) {
+            updateList(file);
+        }
+
         if (file.isFile() == true) {
             ArrayList<String> lines = new ArrayList<>();
 
@@ -113,25 +119,32 @@ public class FileCntl {
         } 
     }
     
+    public File getFile(String name) {
+        return map.get(name);
+    }
+    
     /**
      * Adds a File to the list.
      * @param file an object of type File, includes directory.
      */
-    private void addFileToList(File file) {
+    private void updateList(File file) {
         DefaultListModel model = ((DefaultListModel)(fileList.getModel()));
         
         // Clear the list first.
         model.clear();
+        map.clear();
         
         boolean isDirectory = file.isDirectory();
         if (isDirectory == true) {
             File[] files = file.listFiles();
-            for(File f: files) {
-                 model.addElement(f.getName());
+            for(File currentFile: files) {
+                model.addElement(currentFile.getName());
+                map.put(currentFile.getName(), currentFile);
             }
         }
         else {
             model.addElement(file.getName());
+            map.put(file.getName(), file);
         }
     }
 }

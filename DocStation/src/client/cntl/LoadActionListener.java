@@ -18,10 +18,10 @@ public class LoadActionListener implements ActionListener {
         File file = fileCntl.getFileFromChooser(JFileChooser.OPEN_DIALOG);
    
         if (file != null) {
-            fileCntl.loadFile(file);
+            fileCntl.loadFile(file, true);
            
         } else {
-             System.out.println("Action canceled");
+            System.out.println("Action canceled");
         }
     }
 }
